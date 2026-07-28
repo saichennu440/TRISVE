@@ -1,0 +1,30 @@
+{
+  "home": {
+    "title": "TRISVÉ  | Global Education Consultants",
+    "bodyClass": "bg-background text-on-background selection:bg-secondary selection:text-on-secondary font-body-md overflow-x-hidden"
+  },
+  "about": {
+    "title": "About TRISVÉ  | Globa̱l Education Consultants",
+    "bodyClass": "antialiased"
+  },
+  "services": {
+    "title": "Services | TRISVÉ  Global Education Consultants",
+    "bodyClass": "bg-background text-on-background font-body-md overflow-x-hidden"
+  },
+  "countries": {
+    "title": "TRISVÉ  | Global Destinations",
+    "bodyClass": "selection:bg-secondary selection:text-on-secondary"
+  },
+  "contact": {
+    "title": "Contact | TRISVÉ  Global Education Consultants",
+    "bodyClass": "bg-background text-on-background font-body-md overflow-x-hidden"
+  },
+  "registration": {
+    "title": "Register | TRISVÉ  Global Education",
+    "bodyClass": "bg-background text-on-background font-body-md overflow-x-hidden selection:bg-secondary selection:text-on-secondary"
+  },
+  "terms": {
+    "title": "Terms & Conditions | TRISVÉ ",
+    "bodyClass": "font-body-md text-on-background selection:bg-secondary selection:text-on-secondary"
+  }
+}

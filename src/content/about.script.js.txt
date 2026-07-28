@@ -1,0 +1,79 @@
+
+        // Reveal Animations on Scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal-hidden').forEach(el => observer.observe(el));
+
+        // Scrollytelling Logic
+        const scrollyBlocks = document.querySelectorAll('.scrolly-text-block');
+        const img1 = document.getElementById('scrolly-img1');
+        const img2 = document.getElementById('scrolly-img2');
+
+        window.addEventListener('scroll', () => {
+            let currentBlock = "";
+            scrollyBlocks.forEach(block => {
+                const rect = block.getBoundingClientRect();
+                if (rect.top < window.innerHeight / 2 && rect.bottom > window.innerHeight / 2) {
+                    currentBlock = block.dataset.image;
+                }
+            });
+
+            if (currentBlock === "img1") {
+                img1.style.opacity = "1";
+                img2.style.opacity = "0";
+            } else if (currentBlock === "img2") {
+                img1.style.opacity = "0";
+                img2.style.opacity = "1";
+            }
+        });
+
+        // Stats Counter Animation
+        const statElements = document.querySelectorAll('[data-target]');
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    const target = parseInt(el.getAttribute('data-target'));
+                    let count = 0;
+                    const duration = 2000;
+                    const step = target / (duration / 16);
+                    
+                    const updateCount = () => {
+                        count += step;
+                        if (count < target) {
+                            el.innerText = Math.floor(count) + (target === 15 ? '+' : '');
+                            requestAnimationFrame(updateCount);
+                        } else {
+                            el.innerText = target + (target === 15 ? '+' : '');
+                        }
+                    };
+                    updateCount();
+                    statObserver.unobserve(el);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        statElements.forEach(el => statObserver.observe(el));
+
+        // Simple Parallax for Founder Image
+        window.addEventListener('scroll', () => {
+            const founderImg = document.getElementById('founder-parallax');
+            const rect = founderImg.parentElement.getBoundingClientRect();
+            const scrolled = window.scrollY;
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                const yPos = (rect.top - window.innerHeight / 2) * 0.1;
+                founderImg.style.transform = `scale(1.1) translateY(${yPos}px)`;
+            }
+        });
+    

@@ -1,0 +1,36 @@
+
+        // Map Tooltip Logic
+        const pins = document.querySelectorAll('.map-pin');
+        const tooltip = document.getElementById('map-tooltip');
+        const container = document.querySelector('.map-container');
+
+        pins.forEach(pin => {
+            pin.addEventListener('mouseenter', (e) => {
+                const name = pin.getAttribute('data-name');
+                tooltip.textContent = name;
+                tooltip.style.visibility = 'visible';
+                tooltip.style.opacity = '1';
+            });
+
+            pin.addEventListener('mousemove', (e) => {
+                const rect = container.getBoundingClientRect();
+                tooltip.style.left = (e.clientX - rect.left + 15) + 'px';
+                tooltip.style.top = (e.clientY - rect.top - 35) + 'px';
+            });
+
+            pin.addEventListener('mouseleave', () => {
+                tooltip.style.visibility = 'hidden';
+                tooltip.style.opacity = '0';
+            });
+        });
+
+        // Simple smooth scroll for anchors
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    

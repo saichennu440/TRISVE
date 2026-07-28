@@ -1,0 +1,48 @@
+
+        // Scroll spy for Table of Contents
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.toc-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scroll for TOC links
+        navLinks.forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 120,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Atmosphere Effect: Sublte cursor follower
+        const blob = document.createElement('div');
+        blob.className = 'fixed w-64 h-64 bg-secondary/5 rounded-full blur-[100px] pointer-events-none z-0 transition-transform duration-300 ease-out';
+        document.body.appendChild(blob);
+
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX - 128;
+            const y = e.clientY - 128;
+            blob.style.transform = `translate(${x}px, ${y}px)`;
+        });
+    

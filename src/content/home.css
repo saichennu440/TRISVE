@@ -1,0 +1,52 @@
+
+        .grain {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.03;
+            background-image: url("https://www.transparenttextures.com/patterns/p6-dark.png");
+        }
+        
+        .magnetic-btn {
+            transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .scroll-marquee {
+            animation: marquee 40s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .process-line {
+            height: 1px;
+            background: linear-gradient(to right, #f5bd5c, transparent);
+            width: 0%;
+            transition: width 1.5s ease-out;
+        }
+
+        .reveal-visible .process-line {
+            width: 100%;
+        }
+
+        .stagger-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal-visible .stagger-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    

@@ -1,0 +1,35 @@
+
+        // Scrollytelling implementation
+        document.addEventListener('DOMContentLoaded', () => {
+            const setupScrolly = (contentId, imageContainerId) => {
+                const steps = document.querySelectorAll(`#${contentId} .step-content`);
+                const images = document.querySelectorAll(`#${imageContainerId} > div`);
+
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.5
+                };
+
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const stepIndex = parseInt(entry.target.getAttribute('data-step'));
+                            
+                            // Clear all images in this container
+                            images.forEach((img, i) => {
+                                img.style.opacity = i === stepIndex ? '1' : '0';
+                            });
+                        }
+                    });
+                }, observerOptions);
+
+                steps.forEach(step => observer.observe(step));
+            };
+
+            setupScrolly('clarity-steps', 'clarity-images');
+            setupScrolly('journey-steps', 'journey-images');
+        });
+
+        // Navbar interaction
+   
