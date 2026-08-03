@@ -1,8 +1,9 @@
+// #Htmlpage.jsx
 import { useLayoutEffect, useMemo, useState } from 'react'
-import L from 'leaflet'
-import 'leaflet/dist/leaflet.css'
-import 'leaflet/dist/images/marker-icon.png'
-import 'leaflet/dist/images/marker-shadow.png'
+
+import * as maplibregl from 'maplibre-gl'
+import 'maplibre-gl/dist/maplibre-gl.css'
+
 export default function HtmlPage({ html, css, script, title, bodyClass = '' }) {
   const [toast, setToast] = useState('')
   const styleId = useMemo(() => `page-style-${title.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}`, [title])
@@ -19,41 +20,143 @@ export default function HtmlPage({ html, css, script, title, bodyClass = '' }) {
     style.textContent = css
     document.head.appendChild(style)
 
-    const mapElement = document.getElementById("globalMap");
-
+const mapElement = document.querySelector("#globalMap");
 let map = null;
 
 if (mapElement) {
 
-  map = L.map(mapElement).setView([28, 15], 2);
+    map = new maplibregl.Map({
 
-  L.tileLayer(
-    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {
-      attribution: "&copy; OpenStreetMap contributors",
-    }
-  ).addTo(map);
+        container: mapElement,
 
-  const locations = [
-    ["USA", 38.8977, -77.0365],
-    ["United Kingdom", 51.5072, -0.1276],
-    ["Ireland", 53.3498, -6.2603],
-    ["Germany", 52.52, 13.405],
-    ["France", 48.8566, 2.3522],
-    ["Spain", 40.4168, -3.7038],
-    ["Italy", 41.9028, 12.4964],
-    ["Poland", 52.2297, 21.0122],
-    ["Dubai", 25.2048, 55.2708],
-    ["Australia", -33.8688, 151.2093],
-  ];
 
-  locations.forEach(([name, lat, lng]) => {
-    L.marker([lat, lng])
-      .addTo(map)
-      .bindPopup(`<b>${name}</b>`);
-  });
+        style: "https://api.maptiler.com/maps/dataviz-dark/style.json?key=8lgb8aINX1ww91syPCpP",
+        
+        center: [20, 28],
+
+        zoom: 1.4,
+
+        attributionControl: false
+
+    });
+
+  map.dragRotate.disable();
+map.touchZoomRotate.disableRotation();
+map.scrollZoom.disable();
+map.doubleClickZoom.disable();
+
+
+    const countries = [
+
+        {
+            name: "United States",
+            lng: -98.5795,
+            lat: 39.8283
+        },
+
+        {
+            name: "United Kingdom",
+            lng: -0.1276,
+            lat: 51.5072
+        },
+
+        {
+            name: "Ireland",
+            lng: -6.2603,
+            lat: 53.3498
+        },
+
+        {
+            name: "Germany",
+            lng: 13.4050,
+            lat: 52.5200
+        },
+
+        {
+            name: "France",
+            lng: 2.3522,
+            lat: 48.8566
+        },
+
+        {
+            name: "Spain",
+            lng: -3.7038,
+            lat: 40.4168
+        },
+
+        {
+            name: "Italy",
+            lng: 12.4964,
+            lat: 41.9028
+        },
+
+        {
+            name: "Poland",
+            lng: 21.0122,
+            lat: 52.2297
+        },
+
+        {
+            name: "Dubai",
+            lng: 55.2708,
+            lat: 25.2048
+        },
+
+        {
+            name: "Australia",
+            lng: 151.2093,
+            lat: -33.8688
+        }
+
+    ];
+
+    countries.forEach(country => {
+
+        const marker = document.createElement("div");
+
+        marker.style.width = "16px";
+        marker.style.height = "16px";
+        marker.style.borderRadius = "50%";
+        marker.style.background = "#f5bd5c";
+        marker.style.border = "4px solid rgba(245,189,92,.35)";
+        marker.style.boxShadow = "0 0 18px rgba(245,189,92,.7)";
+        marker.style.cursor = "pointer";
+
+        new maplibregl.Marker(marker)
+            .setLngLat([country.lng, country.lat])
+            .setPopup(
+                new maplibregl.Popup({
+                    offset: 20
+                }).setHTML(`
+                    <div style="
+                        background:#131315;
+                        color:white;
+                        padding:4px;
+                        min-width:170px;
+                    ">
+                        <strong style="
+                            color:#f5bd5c;
+                            font-size:16px;
+                        ">
+                            ${country.name}
+                        </strong>
+                        <br>
+                        <span style="
+                            color:#b8b8b8;
+                            font-size:13px;
+                        ">
+                            Study Destination
+                        </span>
+                    </div>
+                `)
+            )
+            .addTo(map);
+
+    });
 
 }
+
+
 
     let error = null
     try {
@@ -69,8 +172,9 @@ if (mapElement) {
     }
 
     return () => {
-      if (map) {
+if (map) {
     map.remove();
+    map = null;
 }
       document.getElementById(styleId)?.remove()
       document.body.className = previousClass

@@ -1,3 +1,121 @@
+<!-- countries.html: complete modified page content -->
+<style>
+:root {
+    --grain: url("https://www.transparenttextures.com/patterns/stardust.png");
+}
+
+body {
+    background-color: #131315;
+    background-image: var(--grain);
+    background-repeat: repeat;
+    -webkit-font-smoothing: antialiased;
+}
+
+.grain-overlay {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    opacity: 0.03;
+    background-image: var(--grain);
+}
+
+.editorial-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 32px;
+}
+
+.hover-divider {
+    transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.editorial-card:hover .hover-divider {
+    width: 100%;
+}
+
+/* =========================================================
+   Global Footprint: predefined black-theme world map
+========================================================= */
+.gf-section {
+    --gf-bg: #060607;
+    --gf-panel: #0d0d0f;
+    --gf-panel-2: #111114;
+    --gf-gold: #f5bd5c;
+    --gf-white: #ffffff;
+    --gf-text: #b7b7bd;
+    --gf-muted: #76767e;
+    --gf-border: rgba(255, 255, 255, 0.09);
+    position: relative;
+    overflow: hidden;
+    padding: 6rem 0;
+    background: radial-gradient(circle at 50% 42%, rgba(245,189,92,.07), transparent 38%), linear-gradient(180deg, #050506, #09090b);
+}
+.gf-section, .gf-section * { box-sizing: border-box; }
+.gf-grid { position:absolute; inset:0; opacity:.14; pointer-events:none; background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px); background-size:70px 70px; mask-image:linear-gradient(to bottom,transparent,black 18%,black 82%,transparent); }
+.gf-glow { position:absolute; left:50%; top:7rem; width:46rem; height:46rem; border-radius:50%; transform:translateX(-50%); background:rgba(245,189,92,.04); filter:blur(145px); pointer-events:none; }
+.gf-heading { max-width:760px; margin:0 auto 3.75rem; text-align:center; }
+.gf-overline { margin:0 0 1rem; color:var(--gf-gold); font-size:.7rem; font-weight:600; letter-spacing:.3em; text-transform:uppercase; }
+.gf-heading h2 { margin:0; color:var(--gf-white); }
+.gf-intro { max-width:590px; margin:1.25rem auto 0; color:var(--gf-text); font-size:1rem; line-height:1.8; }
+.gf-shell { position:relative; overflow:hidden; border:1px solid var(--gf-border); background:#08080a; box-shadow:0 45px 100px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.03); }
+.gf-information { position:absolute; z-index:30; top:1.75rem; left:1.75rem; width:19rem; min-height:10.5rem; padding:1.5rem; border:1px solid var(--gf-border); background:rgba(11,11,13,.9); box-shadow:0 20px 50px rgba(0,0,0,.38); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); }
+.gf-information-topline { display:flex; justify-content:space-between; gap:1rem; margin-bottom:1.1rem; color:var(--gf-gold); font-size:.58rem; font-weight:600; letter-spacing:.22em; text-transform:uppercase; }
+.gf-information-topline span:last-child { color:rgba(245,189,92,.38); font-size:1.65rem; font-weight:300; letter-spacing:0; line-height:.8; }
+.gf-information h3 { margin:0 0 .55rem; color:var(--gf-white); font-size:1.55rem; font-weight:400; line-height:1.2; }
+.gf-information p { margin:0; color:var(--gf-text); font-size:.82rem; line-height:1.65; }
+.gf-map-scroll { overflow-x:auto; scrollbar-width:thin; scrollbar-color:rgba(245,189,92,.35) #08080a; }
+.gf-map-scroll::-webkit-scrollbar { height:6px; }
+.gf-map-scroll::-webkit-scrollbar-track { background:#08080a; }
+.gf-map-scroll::-webkit-scrollbar-thumb { border-radius:10px; background:rgba(245,189,92,.35); }
+.gf-map-canvas { position:relative; width:100%; min-width:880px; aspect-ratio:2/1; isolation:isolate; }
+.gf-map-canvas::before { position:absolute; z-index:5; inset:0; content:""; pointer-events:none; background:linear-gradient(90deg,rgba(5,5,6,.48),transparent 15%,transparent 85%,rgba(5,5,6,.48)),linear-gradient(180deg,rgba(5,5,6,.14),transparent 40%,rgba(5,5,6,.42)); }
+.gf-world-map { position:absolute; z-index:1; inset:5% 4%; width:92%; height:90%; object-fit:fill; opacity:.24; filter:grayscale(1) invert(1) brightness(.75) contrast(1.1); pointer-events:none; user-select:none; }
+.gf-map-grid { position:absolute; z-index:2; inset:0; opacity:.11; pointer-events:none; background-image:linear-gradient(rgba(255,255,255,.11) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.11) 1px,transparent 1px); background-size:10% 20%; }
+.gf-routes { position:absolute; z-index:6; inset:0; width:100%; height:100%; pointer-events:none; }
+.gf-route { fill:none; stroke:var(--gf-gold); stroke-width:1.15; stroke-linecap:round; stroke-dasharray:6 8; opacity:.3; vector-effect:non-scaling-stroke; animation:gf-route-move 25s linear infinite; }
+.gf-route-main { stroke-width:1.45; opacity:.43; }
+@keyframes gf-route-move { to { stroke-dashoffset:-260; } }
+.gf-origin-label { position:absolute; z-index:11; left:65.115%; top:43.615%; transform:translate(1.55rem,-50%); pointer-events:none; }
+.gf-origin-label span { display:block; color:var(--gf-gold); font-size:.52rem; font-weight:600; letter-spacing:.21em; text-transform:uppercase; }
+.gf-origin-label strong { display:block; margin-top:.25rem; color:var(--gf-white); font-size:.75rem; font-weight:500; }
+.gf-pin { position:absolute; z-index:15; width:28px; height:28px; padding:0; border:0; border-radius:50%; outline:none; cursor:pointer; transform:translate(-50%,-50%); background:transparent; }
+.gf-pin-ring { position:absolute; inset:2px; border:1px solid rgba(245,189,92,.65); border-radius:50%; background:rgba(245,189,92,.08); transition:transform .25s ease,background .25s ease,border-color .25s ease; }
+.gf-pin-dot { position:absolute; top:50%; left:50%; width:8px; height:8px; border:2px solid #08080a; border-radius:50%; transform:translate(-50%,-50%); background:var(--gf-gold); box-shadow:0 0 0 2px rgba(245,189,92,.28),0 0 18px rgba(245,189,92,.9); transition:width .25s ease,height .25s ease,box-shadow .25s ease; }
+.gf-pin-pulse { position:absolute; top:50%; left:50%; width:28px; height:28px; border:1px solid rgba(245,189,92,.6); border-radius:50%; transform:translate(-50%,-50%); animation:gf-pin-pulse 2.4s ease-out infinite; }
+@keyframes gf-pin-pulse { 0% { opacity:.9; transform:translate(-50%,-50%) scale(.35); } 75%,100% { opacity:0; transform:translate(-50%,-50%) scale(1.65); } }
+.gf-pin:hover .gf-pin-ring,.gf-pin:focus-visible .gf-pin-ring,.gf-pin.is-active .gf-pin-ring { border-color:var(--gf-gold); background:rgba(245,189,92,.2); transform:scale(1.16); }
+.gf-pin:hover .gf-pin-dot,.gf-pin:focus-visible .gf-pin-dot,.gf-pin.is-active .gf-pin-dot { width:11px; height:11px; box-shadow:0 0 0 4px rgba(245,189,92,.17),0 0 30px rgba(245,189,92,1); }
+.gf-pin-india .gf-pin-ring { inset:0; border:2px solid var(--gf-gold); background:rgba(255,255,255,.12); }
+.gf-pin-india .gf-pin-dot { width:10px; height:10px; background:var(--gf-white); }
+.gf-tooltip { position:absolute; left:50%; bottom:calc(100% + 12px); width:max-content; max-width:230px; padding:.62rem .8rem; border:1px solid rgba(245,189,92,.24); color:var(--gf-white); font-size:.67rem; font-weight:500; letter-spacing:.03em; white-space:nowrap; pointer-events:none; opacity:0; transform:translate(-50%,8px); background:rgba(10,10,12,.97); box-shadow:0 14px 35px rgba(0,0,0,.48); transition:opacity .2s ease,transform .2s ease; }
+.gf-tooltip::after { position:absolute; top:100%; left:50%; width:8px; height:8px; content:""; border-right:1px solid rgba(245,189,92,.24); border-bottom:1px solid rgba(245,189,92,.24); transform:translate(-50%,-4px) rotate(45deg); background:#0a0a0c; }
+.gf-pin:hover .gf-tooltip,.gf-pin:focus-visible .gf-tooltip { opacity:1; transform:translate(-50%,0); }
+/* Pin coordinates are calculated from the actual country paths
+   in the 950 × 620 SVG map. Do not change these percentages. */
+#global-footprint .gf-pin-usa { left:27.791% !important; top:34.457% !important; }
+#global-footprint .gf-pin-ireland { left:45.924% !important; top:29.681% !important; }
+#global-footprint .gf-pin-uk { left:47.270% !important; top:29.268% !important; }
+#global-footprint .gf-pin-france { left:48.526% !important; top:33.084% !important; }
+#global-footprint .gf-pin-germany { left:50.414% !important; top:30.684% !important; }
+#global-footprint .gf-pin-spain { left:47.028% !important; top:36.280% !important; }
+#global-footprint .gf-pin-italy { left:50.999% !important; top:34.822% !important; }
+#global-footprint .gf-pin-poland { left:52.518% !important; top:30.087% !important; }
+#global-footprint .gf-pin-dubai { left:59.231% !important; top:43.484% !important; }
+#global-footprint .gf-pin-india { left:64.115% !important; top:43.615% !important; }
+#global-footprint .gf-pin-australia { left:75.323% !important; top:67.905% !important; }
+.gf-destinations { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); border-top:1px solid var(--gf-border); background:#09090b; }
+.gf-destination { display:flex; align-items:center; gap:.65rem; min-height:4rem; padding:.8rem 1rem; border:0; border-right:1px solid var(--gf-border); border-bottom:1px solid var(--gf-border); color:var(--gf-muted); cursor:pointer; text-align:left; background:transparent; transition:color .2s ease,background .2s ease; }
+.gf-destination:nth-child(6n) { border-right:0; }
+.gf-destination::before { width:6px; height:6px; flex:0 0 6px; border-radius:50%; content:""; background:currentColor; transition:background .2s ease,box-shadow .2s ease; }
+.gf-destination span { font-size:.65rem; font-weight:500; letter-spacing:.07em; text-transform:uppercase; }
+.gf-destination:hover,.gf-destination:focus-visible,.gf-destination.is-active { color:var(--gf-white); outline:none; background:rgba(255,255,255,.025); }
+.gf-destination.is-active::before { background:var(--gf-gold); box-shadow:0 0 14px rgba(245,189,92,.8); }
+@media (max-width:1100px) { .gf-destinations { grid-template-columns:repeat(4,minmax(0,1fr)); } .gf-destination:nth-child(6n) { border-right:1px solid var(--gf-border); } .gf-destination:nth-child(4n) { border-right:0; } }
+@media (max-width:767px) { .gf-section { padding:5rem 0; } .gf-heading { margin-bottom:2.5rem; } .gf-intro { font-size:.9rem; } .gf-information { position:relative; top:auto; left:auto; width:100%; min-height:9.5rem; border-width:0 0 1px; background:#0c0c0e; } .gf-map-canvas { min-width:820px; } .gf-origin-label { display:none; } .gf-destinations { grid-template-columns:repeat(2,minmax(0,1fr)); } .gf-destination:nth-child(4n),.gf-destination:nth-child(6n) { border-right:1px solid var(--gf-border); } .gf-destination:nth-child(2n) { border-right:0; } }
+@media (max-width:430px) { .gf-destinations { grid-template-columns:1fr; } .gf-destination,.gf-destination:nth-child(2n),.gf-destination:nth-child(4n),.gf-destination:nth-child(6n) { border-right:0; } }
+@media (prefers-reduced-motion:reduce) { .gf-route,.gf-pin-pulse { animation:none; } }
+</style>
 
 <div class="grain-overlay"></div>
 
@@ -5,8 +123,9 @@
 class="relative pt-section-gap pb-24 overflow-hidden">
 <div class="max-w-container-max mx-auto px-margin-edge">
 <div class="max-w-4xl">
-<span class="font-eyebrow text-secondary uppercase tracking-[0.3em] block mb-6">Global Horizons</span>
-<h1 class="font-display-lg text-display-lg-mobile md:text-display-lg text-on-background mb-8 italic">
+<span class="font-eyebrow text-secondary uppercase tracking-[0.3em] block mb-6">
+    Global Horizons</span>
+<h1 class="font-display-lg text-5xl md:text-6xl font-light leading-tight tracking-tight max-w-4xl mb-8 stagger-in" style="transition-delay:300ms;">
                     Wherever your goals take you, we help you get there.
                 </h1>
 <div class="w-24 h-px bg-secondary/50 mb-8"></div>
@@ -19,31 +138,138 @@ class="relative pt-section-gap pb-24 overflow-hidden">
 <div class="absolute top-0 right-0 -z-10 w-1/3 h-full opacity-10">
 </div>
 </header>
-<section class="py-24 bg-surface-container-lowest relative">
-    <div class="max-w-container-max mx-auto px-margin-edge">
 
-        <div class="text-center mb-20">
-            <h2 class="font-headline-md text-on-background mb-4">
+<section id="global-footprint" class="gf-section" aria-labelledby="global-footprint-title">
+    <div class="gf-grid" aria-hidden="true"></div>
+    <div class="gf-glow" aria-hidden="true"></div>
+
+    <div class="max-w-container-max mx-auto px-margin-edge relative z-10">
+        <div class="gf-heading">
+            <p class="gf-overline">International Education Network</p>
+            <h2 id="global-footprint-title" class="font-display-lg text-headline-md font-light leading-tight">
                 Our Global Footprint
             </h2>
-
-            <p class="font-eyebrow text-secondary">
-                CLICK A PIN TO EXPLORE CORE REGIONS
+            <p class="gf-intro">
+                Select a destination to explore leading study opportunities across our global education network.
             </p>
         </div>
 
-        <div class="rounded-2xl overflow-hidden border border-outline-variant/10 shadow-2xl">
+        <div class="gf-shell">
+            <!-- <aside class="gf-information" aria-live="polite">
+                <div class="gf-information-topline">
+                    <span>Selected Destination</span>
+                    <span id="gf-number">01</span>
+                </div>
+                <h3 id="gf-country">India</h3>
+                <p id="gf-description">
+                    Your study-abroad journey begins with personalised counselling and end-to-end guidance from India.
+                </p>
+            </aside> -->
 
-            <div
-                id="globalMap"
-                style="width:100%;height:650px;">
+            <div class="gf-map-scroll" aria-label="Interactive global destinations map">
+                <div class="gf-map-canvas">
+                    <!-- Pin positions below are mapped directly to the actual SVG country shapes. -->
+                    <img
+                        class="gf-world-map"
+                        src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg"
+                        alt="World map showing study destinations"
+                        draggable="false"
+                    >
+
+                    <div class="gf-map-grid" aria-hidden="true"></div>
+
+                    <svg class="gf-routes" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true">
+                        <!-- <path class="gf-route gf-route-main" d="M691.15 218.08 C575 40 345 48 227.91 172.28"></path> -->
+                        <path class="gf-route"     d="M641.15 218.08 Q460 55 277.91 172.29"></path>
+                        <path class="gf-route" d="M641.15 218.08 C625 96 550 98 472.70 146.34"></path>
+                        <path class="gf-route" d="M641.15 218.08 C628 124 555 124 485.26 165.42"></path>
+                        <path class="gf-route" d="M641.15 218.08 C640 107 575 105 504.14 153.42"></path>
+                        <path class="gf-route" d="M641.15 218.08 C615 154 545 151 470.28 181.40"></path>
+                        <path class="gf-route" d="M641.15 218.08 C640 144 580 142 509.99 174.11"></path>
+                        <path class="gf-route" d="M641.15 218.08 C650 102 600 102 525.18 150.44"></path>
+                        <path class="gf-route gf-route-main"     d="M641.15 218.08 Q616 204 592.31 217.42"></path>
+                        <path class="gf-route gf-route-main"     d="M641.15 218.08 Q720 245 753.23 339.53"></path>
+</svg>
+
+                    <div class="gf-origin-label" aria-hidden="true">
+                        <span>Starting Point</span>
+                        <strong>India</strong>
+                    </div>
+
+                    <button class="gf-pin gf-pin-india is-active" type="button" data-location="india" style="left:69.115%; top:43.615%;" aria-label="Select India" aria-pressed="true">
+                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
+                        <span class="gf-tooltip">India · Your Journey Begins Here</span>
+                    </button>
+
+                    <button class="gf-pin gf-pin-usa" type="button" data-location="usa" style="left:22.791%; top:34.457%;" aria-label="Select USA" aria-pressed="false">
+                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
+                        <span class="gf-tooltip">USA · Ivy League, STEM and Research</span>
+                    </button>
+
+                    <button class="gf-pin gf-pin-ireland" type="button" data-location="ireland" style="left:45.924%; top:29.681%;" aria-label="Select Ireland" aria-pressed="false">
+                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
+                        <span class="gf-tooltip">Ireland · Innovation and Technology</span>
+                    </button>
+
+                    <button class="gf-pin gf-pin-uk" type="button" data-location="uk" style="left:47.270%; top:29.268%;" aria-label="Select United Kingdom" aria-pressed="false">
+                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
+                        <span class="gf-tooltip">United Kingdom · World-Class Universities</span>
+                    </button>
+
+                    <button class="gf-pin gf-pin-france" type="button" data-location="france" style="left:48.526%; top:33.084%;" aria-label="Select France" aria-pressed="false">
+                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
+                        <span class="gf-tooltip">France · Business, Fashion and Engineering</span>
+                    </button>
+
+                    <button class="gf-pin gf-pin-germany" type="button" data-location="germany" style="left:50.414%; top:30.684%;" aria-label="Select Germany" aria-pressed="false">
+                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
+                        <span class="gf-tooltip">Germany · Engineering Excellence</span>
+                    </button>
+
+                    <button class="gf-pin gf-pin-spain" type="button" data-location="spain" style="left:47.028%; top:36.280%;" aria-label="Select Spain" aria-pressed="false">
+                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
+                        <span class="gf-tooltip">Spain · Business, Hospitality and Arts</span>
+                    </button>
+
+                    <button class="gf-pin gf-pin-italy" type="button" data-location="italy" style="left:50.999%; top:34.822%;" aria-label="Select Italy" aria-pressed="false">
+                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
+                        <span class="gf-tooltip">Italy · Design, Architecture and Business</span>
+                    </button>
+
+                    <button class="gf-pin gf-pin-poland" type="button" data-location="poland" style="left:52.518%; top:30.087%;" aria-label="Select Poland" aria-pressed="false">
+                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
+                        <span class="gf-tooltip">Poland · Affordable European Education</span>
+                    </button>
+
+                    <button class="gf-pin gf-pin-dubai" type="button" data-location="dubai" style="left:62.231%; top:43.484%;" aria-label="Select Dubai" aria-pressed="false">
+                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
+                        <span class="gf-tooltip">Dubai · Global Business Hub</span>
+                    </button>
+
+                    <button class="gf-pin gf-pin-australia" type="button" data-location="australia" style="left:83.323%; top:67.905%;" aria-label="Select Australia" aria-pressed="false">
+                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
+                        <span class="gf-tooltip">Australia · Innovation and Lifestyle</span>
+                    </button>
+                </div>
             </div>
 
+            <!-- <div class="gf-destinations" aria-label="Destination selector">
+                <button class="gf-destination is-active" type="button" data-location="india"><span>India</span></button>
+                <button class="gf-destination" type="button" data-location="usa"><span>USA</span></button>
+                <button class="gf-destination" type="button" data-location="ireland"><span>Ireland</span></button>
+                <button class="gf-destination" type="button" data-location="uk"><span>United Kingdom</span></button>
+                <button class="gf-destination" type="button" data-location="france"><span>France</span></button>
+                <button class="gf-destination" type="button" data-location="germany"><span>Germany</span></button>
+                <button class="gf-destination" type="button" data-location="spain"><span>Spain</span></button>
+                <button class="gf-destination" type="button" data-location="italy"><span>Italy</span></button>
+                <button class="gf-destination" type="button" data-location="poland"><span>Poland</span></button>
+                <button class="gf-destination" type="button" data-location="dubai"><span>Dubai</span></button>
+                <button class="gf-destination" type="button" data-location="australia"><span>Australia</span></button>
+            </div> -->
         </div>
-
     </div>
 </section>
-   
+
 <section class="py-section-gap">
 <div class="max-w-container-max mx-auto px-margin-edge">
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
@@ -210,13 +436,13 @@ class="relative pt-section-gap pb-24 overflow-hidden">
 <!-- Abstract BG -->
 <div class="absolute inset-0 opacity-20 -z-0">
 </div>
-<div class="relative z-10 max-w-2xl">
-<h2 class="font-display-lg text-display-lg-mobile md:text-headline-md text-on-background mb-10 leading-tight">
+<div class="relative z-10 max-w-3xl">
+<h2 class="font-display-lg text-display-lg-mobile md:text-headline-md text-on-background mb-10 font-light leading-tight">
                         Not sure which country is right for you?
                     </h2>
-<a class="inline-flex items-center gap-4 bg-secondary text-on-secondary px-10 py-5 font-eyebrow uppercase tracking-widest hover:translate-x-2 transition-transform duration-300" href="/register">
+<a class="inline-flex items-center gap-4 bg-secondary text-on-secondary px-5 py-4 font-eyebrow uppercase tracking-widest hover:translate-x-2 transition-transform duration-300" href="/register">
                         Book a Clarity First Session
-                        <span class="material-symbols-outlined">arrow_forward</span>
+      <span class="material-symbols-outlined">arrow_forward</span>
 </a>
 </div>
 </div>
@@ -278,3 +504,62 @@ class="relative pt-section-gap pb-24 overflow-hidden">
 <p class="font-eyebrow text-eyebrow text-on-surface-variant/50">© 2024 TRISVÉ Global Education Consultants. All rights reserved.</p>
 </div>
 </footer>
+
+<script>
+/* countries.js: Global Footprint interaction */
+document.addEventListener("DOMContentLoaded", function () {
+    const section = document.getElementById("global-footprint");
+    if (!section) return;
+
+    const locations = {
+        india: { number: "01", country: "India", description: "Your study-abroad journey begins with personalised counselling and end-to-end guidance from India." },
+        usa: { number: "02", country: "United States", description: "Access Ivy League universities, leading STEM programmes, advanced research and extensive career opportunities." },
+        ireland: { number: "03", country: "Ireland", description: "Explore technology-driven programmes, innovation-focused universities and valuable scholarship opportunities." },
+        uk: { number: "04", country: "United Kingdom", description: "Study at globally recognised universities, including prestigious Russell Group institutions." },
+        france: { number: "05", country: "France", description: "Discover internationally respected programmes in business, fashion, engineering, arts and management." },
+        germany: { number: "06", country: "Germany", description: "Experience engineering excellence, research-led education and high-quality programmes with affordable options." },
+        spain: { number: "07", country: "Spain", description: "Build an international career through programmes in business, hospitality, arts, tourism and management." },
+        italy: { number: "08", country: "Italy", description: "Study design, architecture, fashion, business and creative disciplines in a globally influential destination." },
+        poland: { number: "09", country: "Poland", description: "Access affordable European education with strong programmes in engineering, medicine, business and information technology." },
+        dubai: { number: "10", country: "Dubai", description: "Study in a global business hub offering international universities, modern campuses and industry exposure." },
+        australia: { number: "11", country: "Australia", description: "Experience globally ranked universities, practical learning, research opportunities and an excellent student lifestyle." }
+    };
+
+    const number = section.querySelector("#gf-number");
+    const country = section.querySelector("#gf-country");
+    const description = section.querySelector("#gf-description");
+    const pins = section.querySelectorAll(".gf-pin");
+    const buttons = section.querySelectorAll(".gf-destination");
+
+    function selectLocation(key) {
+        const location = locations[key];
+        if (!location) return;
+
+        number.textContent = location.number;
+        country.textContent = location.country;
+        description.textContent = location.description;
+
+        pins.forEach(function (pin) {
+            const active = pin.dataset.location === key;
+            pin.classList.toggle("is-active", active);
+            pin.setAttribute("aria-pressed", String(active));
+        });
+
+        buttons.forEach(function (button) {
+            button.classList.toggle("is-active", button.dataset.location === key);
+        });
+    }
+
+    pins.forEach(function (pin) {
+        pin.addEventListener("click", function () {
+            selectLocation(pin.dataset.location);
+        });
+    });
+
+    buttons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            selectLocation(button.dataset.location);
+        });
+    });
+});
+</script>

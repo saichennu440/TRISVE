@@ -1,98 +1,47 @@
+document.addEventListener('DOMContentLoaded', () => {
 
-        const steps = document.querySelectorAll('.step-content');
-        const nextBtn = document.getElementById('next-btn');
-        const prevBtn = document.getElementById('prev-btn');
-        const progressBar = document.getElementById('progress-bar');
-        const progressPercentage = document.getElementById('progress-percentage');
-        const stepCounter = document.getElementById('step-counter');
-        const stepTitle = document.getElementById('step-title');
-        const successScreen = document.getElementById('success-screen');
-        const form = document.getElementById('reg-form');
+    const form = document.getElementById('reg-form');
+    const successScreen = document.getElementById('success-screen');
 
-        let currentStep = 1;
-        const totalSteps = 9;
+    if (!form) return;
 
-        const stepTitles = [
-            "Personal Identity",
-            "Guardian Details",
-            "Academic Foundation",
-            "Global Ambitions",
-            "Standardized Metrics",
-            "Financial Strategy",
-            "Professional Context",
-            "Service Selection",
-            "Final Affirmation"
-        ];
+    form.addEventListener('submit', (event) => {
 
-        function updateUI() {
-            // Visibility
-            steps.forEach(step => {
-                const s = parseInt(step.dataset.step);
-                if (s === currentStep) {
-                    step.classList.remove('hidden');
-                    step.classList.add('animate-in', 'fade-in', 'slide-in-from-right-4', 'duration-500');
-                } else {
-                    step.classList.add('hidden');
+        event.preventDefault();
+
+        const requiredFields = form.querySelectorAll('[required]');
+        let firstInvalidField = null;
+
+        requiredFields.forEach((field) => {
+
+            field.classList.remove('border-red-500');
+
+            if (!field.checkValidity()) {
+
+                field.classList.add('border-red-500');
+
+                if (!firstInvalidField) {
+                    firstInvalidField = field;
                 }
-            });
 
-            // Progress Bar
-            const percent = (currentStep / totalSteps) * 100;
-            progressBar.style.width = `${percent}%`;
-            progressPercentage.textContent = `${Math.round(percent)}% Complete`;
-            stepCounter.textContent = `Step 0${currentStep} / 09`;
-            stepTitle.textContent = stepTitles[currentStep - 1];
-
-            // Nav Buttons
-            if (currentStep === 1) {
-                prevBtn.classList.add('opacity-0', 'pointer-events-none');
-            } else {
-                prevBtn.classList.remove('opacity-0', 'pointer-events-none');
             }
 
-            if (currentStep === totalSteps) {
-                nextBtn.textContent = "FINALIZE & SUBMIT";
-            } else {
-                nextBtn.textContent = "CONTINUE";
-            }
+        });
+
+        if (firstInvalidField) {
+
+            firstInvalidField.focus();
+            firstInvalidField.reportValidity();
+
+            return;
+
         }
 
-        nextBtn.addEventListener('click', () => {
-            if (currentStep < totalSteps) {
-                currentStep++;
-                updateUI();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                // Handle Submission
-                const declaration = document.getElementById('declare');
-                if (!declaration.checked) {
-                    declaration.parentElement.classList.add('animate-bounce');
-                    setTimeout(() => declaration.parentElement.classList.remove('animate-bounce'), 1000);
-                    return;
-                }
-                
-                successScreen.classList.remove('hidden');
-                successScreen.classList.add('animate-in', 'fade-in', 'duration-1000');
-            }
-        });
+        if (successScreen) {
+            successScreen.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
 
-        prevBtn.addEventListener('click', () => {
-            if (currentStep > 1) {
-                currentStep--;
-                updateUI();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        });
+    });
 
-        // Micro-interactions for floating labels
-        document.querySelectorAll('.floating-label-input input, .floating-label-input select, .floating-label-input textarea').forEach(el => {
-            el.addEventListener('focus', () => {
-                el.parentElement.querySelector('label').style.color = '#f5bd5c';
-            });
-            el.addEventListener('blur', () => {
-                if (!el.value) {
-                    el.parentElement.querySelector('label').style.color = '';
-                }
-            });
-        });
-    
+});
