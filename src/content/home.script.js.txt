@@ -59,4 +59,58 @@
 
         const statsSection = document.getElementById('stat-1')?.parentElement?.parentElement;
         if (statsSection) statsObserver.observe(statsSection);
-    
+    document.addEventListener('DOMContentLoaded', () => {
+    const marquee = document.getElementById('country-marquee');
+
+    if (!marquee) return;
+
+    let isDragging = false;
+    let startX = 0;
+    let currentX = 0;
+
+    marquee.addEventListener('pointerdown', (event) => {
+        isDragging = true;
+        startX = event.clientX;
+        currentX = event.clientX;
+
+        marquee.classList.add('is-dragging');
+
+        marquee.setPointerCapture(event.pointerId);
+    });
+
+    marquee.addEventListener('pointermove', (event) => {
+        if (!isDragging) return;
+
+        currentX = event.clientX;
+
+        const distance = currentX - startX;
+
+        marquee.style.transform = `translateX(${distance}px)`;
+    });
+
+    const stopDragging = (event) => {
+        if (!isDragging) return;
+
+        isDragging = false;
+
+        marquee.classList.remove('is-dragging');
+
+        marquee.style.transform = '';
+
+        if (event.pointerId !== undefined) {
+            try {
+                marquee.releasePointerCapture(event.pointerId);
+            } catch (error) {
+                // Pointer capture may already be released.
+            }
+        }
+    };
+
+    marquee.addEventListener('pointerup', stopDragging);
+    marquee.addEventListener('pointercancel', stopDragging);
+    marquee.addEventListener('pointerleave', (event) => {
+        if (event.buttons === 0) {
+            stopDragging(event);
+        }
+    });
+});

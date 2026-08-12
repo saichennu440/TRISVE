@@ -1,47 +1,314 @@
-document.addEventListener('DOMContentLoaded', () => {
+(function () {
 
-    const form = document.getElementById('reg-form');
-    const successScreen = document.getElementById('success-screen');
+    function initRegistrationForm() {
 
-    if (!form) return;
+        const form = document.getElementById("reg-form");
+        const successScreen = document.getElementById("success-screen");
+        const submitButton = document.getElementById("submit-session");
 
-    form.addEventListener('submit', (event) => {
+        if (!form) {
+            console.warn("Registration form not found.");
+            return;
+        }
 
-        event.preventDefault();
+        /*
+         * Prevent duplicate initialization.
+         */
+        if (form.dataset.formspreeInitialized === "true") {
+            return;
+        }
 
-        const requiredFields = form.querySelectorAll('[required]');
-        let firstInvalidField = null;
+        form.dataset.formspreeInitialized = "true";
 
-        requiredFields.forEach((field) => {
 
-            field.classList.remove('border-red-500');
+        /* =========================================================
+           CREATE STATUS MESSAGE
+        ========================================================= */
 
-            if (!field.checkValidity()) {
+        let statusMessage =
+            document.getElementById("form-status-message");
 
-                field.classList.add('border-red-500');
+        if (!statusMessage) {
 
-                if (!firstInvalidField) {
-                    firstInvalidField = field;
+            statusMessage =
+                document.createElement("div");
+
+            statusMessage.id =
+                "form-status-message";
+
+            statusMessage.setAttribute(
+                "role",
+                "alert"
+            );
+
+            statusMessage.style.marginTop = "18px";
+            statusMessage.style.textAlign = "center";
+            statusMessage.style.fontFamily =
+                "Inter, system-ui, sans-serif";
+            statusMessage.style.fontSize = "13px";
+            statusMessage.style.lineHeight = "1.5";
+            statusMessage.style.display = "none";
+
+            form.insertBefore(
+                statusMessage,
+                submitButton
+            );
+        }
+
+
+        /* =========================================================
+           FORM SUBMISSION
+        ========================================================= */
+
+        form.addEventListener("submit", async function (event) {
+
+            event.preventDefault();
+
+
+            /*
+             * Browser validation
+             */
+
+            if (!form.checkValidity()) {
+
+                form.reportValidity();
+
+                return;
+            }
+
+
+            /*
+             * Disable button while submitting
+             */
+
+            const originalButtonHTML =
+                submitButton
+                    ? submitButton.innerHTML
+                    : "";
+
+            if (submitButton) {
+
+                submitButton.disabled = true;
+
+                submitButton.style.opacity = "0.7";
+
+                submitButton.style.cursor =
+                    "not-allowed";
+
+                submitButton.innerHTML = `
+                    <span>
+                        Sending...
+                    </span>
+
+                    <span
+                        class="material-symbols-outlined text-[18px]"
+                    >
+                        progress_activity
+                    </span>
+                `;
+            }
+
+
+            /*
+             * Clear previous status
+             */
+
+            statusMessage.style.display = "none";
+
+            statusMessage.textContent = "";
+
+
+            /*
+             * Build form data
+             */
+
+            const formData =
+                new FormData(form);
+
+
+            /*
+             * Ensure Formspree receives a useful subject
+             */
+
+            if (!formData.get("_subject")) {
+
+                formData.append(
+                    "_subject",
+                    "New TRISVÉ Free Session Request"
+                );
+            }
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        "https://formspree.io/f/mljrneek",
+                        {
+                            method: "POST",
+
+                            body: formData,
+
+                            headers: {
+                                Accept:
+                                    "application/json"
+                            }
+                        }
+                    );
+
+
+                /*
+                 * Formspree successful response
+                 */
+
+                if (response.ok) {
+
+                    /*
+                     * Reset form
+                     */
+
+                    form.reset();
+
+
+                    /*
+                     * Hide form
+                     */
+
+                    form.style.display = "none";
+
+
+                    /*
+                     * Show success screen
+                     */
+
+                    if (successScreen) {
+
+                        successScreen.classList.remove(
+                            "hidden"
+                        );
+
+                        successScreen.scrollIntoView({
+                            behavior: "smooth",
+                            block: "center"
+                        });
+                    }
+
+
+                    /*
+                     * Restore button state
+                     */
+
+                    if (submitButton) {
+
+                        submitButton.disabled = false;
+
+                        submitButton.style.opacity = "";
+
+                        submitButton.style.cursor = "";
+
+                        submitButton.innerHTML =
+                            originalButtonHTML;
+                    }
+
+                    return;
+                }
+
+
+                /*
+                 * Formspree returned an error
+                 */
+
+                let errorMessage =
+                    "Something went wrong. Please try again.";
+
+                try {
+
+                    const data =
+                        await response.json();
+
+                    if (
+                        data &&
+                        Array.isArray(data.errors) &&
+                        data.errors.length > 0
+                    ) {
+
+                        errorMessage =
+                            data.errors
+                                .map(error => error.message)
+                                .join(" ");
+                    }
+
+                } catch (jsonError) {
+
+                    console.warn(
+                        "Could not read Formspree error response.",
+                        jsonError
+                    );
+                }
+
+
+                throw new Error(errorMessage);
+
+            } catch (error) {
+
+                console.error(
+                    "Formspree submission error:",
+                    error
+                );
+
+
+                /*
+                 * Show user-friendly error
+                 */
+
+                statusMessage.textContent =
+                    error.message ||
+                    "Unable to submit your request. Please try again.";
+
+                statusMessage.style.display =
+                    "block";
+
+                statusMessage.style.color =
+                    "#ff8a80";
+
+
+                /*
+                 * Restore button
+                 */
+
+                if (submitButton) {
+
+                    submitButton.disabled = false;
+
+                    submitButton.style.opacity = "";
+
+                    submitButton.style.cursor = "";
+
+                    submitButton.innerHTML =
+                        originalButtonHTML;
                 }
 
             }
 
         });
 
-        if (firstInvalidField) {
 
-            firstInvalidField.focus();
-            firstInvalidField.reportValidity();
+        console.log(
+            "TRISVÉ registration form initialized with Formspree."
+        );
 
-            return;
+    }
 
-        }
 
-        if (successScreen) {
-            successScreen.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
+    /*
+     * IMPORTANT
+     *
+     * HtmlPage executes this script after the raw HTML
+     * has already been inserted.
+     *
+     * Therefore we initialize immediately.
+     */
 
-    });
+    initRegistrationForm();
 
-});
+})();

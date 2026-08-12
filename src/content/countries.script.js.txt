@@ -1,36 +1,185 @@
+(function () {
 
-        // Map Tooltip Logic
-        const pins = document.querySelectorAll('.map-pin');
-        const tooltip = document.getElementById('map-tooltip');
-        const container = document.querySelector('.map-container');
+    function initGlobalFootprint() {
 
-        pins.forEach(pin => {
-            pin.addEventListener('mouseenter', (e) => {
-                const name = pin.getAttribute('data-name');
-                tooltip.textContent = name;
-                tooltip.style.visibility = 'visible';
-                tooltip.style.opacity = '1';
+        const section = document.getElementById("global-footprint");
+
+        if (!section) {
+            console.warn("Global Footprint section not found.");
+            return;
+        }
+
+        const pins = section.querySelectorAll(".gf-pin");
+
+        if (!pins.length) {
+            console.warn("No Global Footprint pins found.");
+            return;
+        }
+
+        console.log("Global Footprint initialized.");
+        console.log("Pins found:", pins.length);
+
+
+        /* ==========================================
+           SCROLL TO COUNTRY CARD
+        ========================================== */
+
+        function scrollToCountry(key) {
+
+            const countryCard = document.getElementById(
+                "country-" + key
+            );
+
+            console.log("Selected country:", key);
+
+            if (!countryCard) {
+                console.warn(
+                    "Country card not found:",
+                    "country-" + key
+                );
+                return;
+            }
+
+            const navbarOffset = 100;
+
+            const cardPosition =
+                countryCard.getBoundingClientRect().top +
+                window.scrollY -
+                navbarOffset;
+
+            window.scrollTo({
+                top: cardPosition,
+                behavior: "smooth"
             });
 
-            pin.addEventListener('mousemove', (e) => {
-                const rect = container.getBoundingClientRect();
-                tooltip.style.left = (e.clientX - rect.left + 15) + 'px';
-                tooltip.style.top = (e.clientY - rect.top - 35) + 'px';
-            });
 
-            pin.addEventListener('mouseleave', () => {
-                tooltip.style.visibility = 'hidden';
-                tooltip.style.opacity = '0';
-            });
-        });
+            /* Highlight the selected country card */
 
-        // Simple smooth scroll for anchors
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+            countryCard.classList.add(
+                "country-card-highlight"
+            );
+
+            setTimeout(function () {
+
+                countryCard.classList.remove(
+                    "country-card-highlight"
+                );
+
+            }, 1500);
+        }
+
+
+        /* ==========================================
+           MAP PIN CLICK
+        ========================================== */
+
+        pins.forEach(function (pin) {
+
+            pin.addEventListener("click", function (event) {
+
+                event.preventDefault();
+                event.stopPropagation();
+
+                const key =
+                    pin.getAttribute("data-location");
+
+                if (!key) {
+                    console.warn(
+                        "Pin has no data-location:",
+                        pin
+                    );
+                    return;
+                }
+
+                console.log("PIN CLICKED:", key);
+
+
+                /* Active pin */
+
+                pins.forEach(function (item) {
+
+                    item.classList.remove("is-active");
+
+                    item.setAttribute(
+                        "aria-pressed",
+                        "false"
+                    );
+
                 });
+
+                pin.classList.add("is-active");
+
+                pin.setAttribute(
+                    "aria-pressed",
+                    "true"
+                );
+
+
+                /* Scroll to matching country card */
+
+                scrollToCountry(key);
+
             });
+
         });
-    
+
+
+        /* ==========================================
+           OPTIONAL DESTINATION BUTTONS
+        ========================================== */
+
+        const destinationButtons =
+            section.querySelectorAll(".gf-destination");
+
+        destinationButtons.forEach(function (button) {
+
+            button.addEventListener("click", function () {
+
+                const key =
+                    button.getAttribute("data-location");
+
+                if (key) {
+                    scrollToCountry(key);
+                }
+
+            });
+
+        });
+
+
+        /* ==========================================
+           CARD HIGHLIGHT STYLE
+        ========================================== */
+
+        if (!document.getElementById("gf-card-highlight-style")) {
+
+            const style =
+                document.createElement("style");
+
+            style.id =
+                "gf-card-highlight-style";
+
+            style.textContent = `
+                .country-card-highlight {
+                    outline: 2px solid rgba(245, 189, 92, 0.75);
+                    outline-offset: -2px;
+                    transition: outline 0.3s ease;
+                }
+            `;
+
+            document.head.appendChild(style);
+        }
+
+    }
+
+
+    /* ==========================================
+       INITIALIZE
+
+       HtmlPage executes this file after the page
+       HTML has already been inserted.
+    ========================================== */
+
+    initGlobalFootprint();
+
+})();

@@ -1,27 +1,336 @@
+(function () {
 
-        // Micro-interaction: Magnetic Button Effect
-        document.querySelectorAll('.magnetic-button').forEach(btn => {
-            btn.addEventListener('mousemove', (e) => {
-                const rect = btn.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                btn.style.transform = `translate(${x * 0.2}px, ${y * 0.3}px) scale(1.02)`;
-            });
-            btn.addEventListener('mouseleave', () => {
-                btn.style.transform = `translate(0, 0) scale(1)`;
-            });
-        });
+    function initContactForm() {
 
-        // Micro-interaction: Form input focus state
-        const inputs = document.querySelectorAll('input');
-        inputs.forEach(input => {
-            input.addEventListener('focus', () => {
-                input.parentElement.querySelector('label').style.color = '#f5bd5c';
-            });
-            input.addEventListener('blur', () => {
-                if (!input.value) {
-                    input.parentElement.querySelector('label').style.color = '';
+        const form =
+            document.getElementById("contact-form");
+
+        const submitButton =
+            document.getElementById("contact-submit");
+
+        const statusMessage =
+            document.getElementById("contact-form-status");
+
+
+        if (!form) {
+            console.warn(
+                "TRISVÉ contact form not found."
+            );
+
+            return;
+        }
+
+
+        /*
+         * Prevent duplicate initialization
+         */
+
+        if (
+            form.dataset.formspreeInitialized === "true"
+        ) {
+            return;
+        }
+
+        form.dataset.formspreeInitialized = "true";
+
+
+        /*
+         * Style status message
+         */
+
+        if (statusMessage) {
+
+            statusMessage.style.fontFamily =
+                "Inter, system-ui, sans-serif";
+
+            statusMessage.style.fontSize =
+                "13px";
+
+            statusMessage.style.lineHeight =
+                "1.5";
+
+            statusMessage.style.padding =
+                "14px 16px";
+
+            statusMessage.style.marginTop =
+                "24px";
+
+            statusMessage.style.border =
+                "1px solid rgba(245, 189, 92, 0.25)";
+        }
+
+
+        /*
+         * Submit
+         */
+
+        form.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                /*
+                 * Browser validation
+                 */
+
+                if (!form.checkValidity()) {
+
+                    form.reportValidity();
+
+                    return;
                 }
-            });
-        });
-    
+
+
+                /*
+                 * Save original button
+                 */
+
+                const originalButtonHTML =
+                    submitButton
+                        ? submitButton.innerHTML
+                        : "";
+
+
+                /*
+                 * Loading state
+                 */
+
+                if (submitButton) {
+
+                    submitButton.disabled = true;
+
+                    submitButton.style.opacity =
+                        "0.7";
+
+                    submitButton.style.cursor =
+                        "not-allowed";
+
+                    submitButton.innerHTML = `
+                        <span>Sending...</span>
+                        <span class="material-symbols-outlined text-[18px]">
+                            progress_activity
+                        </span>
+                    `;
+                }
+
+
+                /*
+                 * Clear previous message
+                 */
+
+                if (statusMessage) {
+
+                    statusMessage.classList.add(
+                        "hidden"
+                    );
+
+                    statusMessage.textContent = "";
+                }
+
+
+                /*
+                 * Form data
+                 */
+
+                const formData =
+                    new FormData(form);
+
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "https://formspree.io/f/mljrneek",
+                            {
+                                method: "POST",
+                                body: formData,
+                                headers: {
+                                    Accept:
+                                        "application/json"
+                                }
+                            }
+                        );
+
+
+                    /*
+                     * Success
+                     */
+
+                    if (response.ok) {
+
+                        form.reset();
+
+
+                        if (statusMessage) {
+
+                            statusMessage.textContent =
+                                "Thank you. Your enquiry has been received. A TRISVÉ consultant will contact you shortly.";
+
+                            statusMessage.style.color =
+                                "#f5bd5c";
+
+                            statusMessage.style.background =
+                                "rgba(245, 189, 92, 0.06)";
+
+                            statusMessage.classList.remove(
+                                "hidden"
+                            );
+                        }
+
+
+                        /*
+                         * Restore button
+                         */
+
+                        if (submitButton) {
+
+                            submitButton.disabled = false;
+
+                            submitButton.style.opacity =
+                                "";
+
+                            submitButton.style.cursor =
+                                "";
+
+                            submitButton.innerHTML =
+                                originalButtonHTML;
+                        }
+
+
+                        /*
+                         * Smoothly bring message
+                         * into view
+                         */
+
+                        if (statusMessage) {
+
+                            setTimeout(function () {
+
+                                statusMessage.scrollIntoView({
+                                    behavior: "smooth",
+                                    block: "center"
+                                });
+
+                            }, 100);
+                        }
+
+
+                        return;
+                    }
+
+
+                    /*
+                     * Formspree error
+                     */
+
+                    let errorMessage =
+                        "Something went wrong. Please try again.";
+
+
+                    try {
+
+                        const data =
+                            await response.json();
+
+                        if (
+                            data &&
+                            Array.isArray(data.errors) &&
+                            data.errors.length
+                        ) {
+
+                            errorMessage =
+                                data.errors
+                                    .map(
+                                        error =>
+                                            error.message
+                                    )
+                                    .join(" ");
+                        }
+
+                    } catch (jsonError) {
+
+                        console.warn(
+                            "Unable to read Formspree error response.",
+                            jsonError
+                        );
+                    }
+
+
+                    throw new Error(
+                        errorMessage
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        "TRISVÉ contact form error:",
+                        error
+                    );
+
+
+                    /*
+                     * Show error
+                     */
+
+                    if (statusMessage) {
+
+                        statusMessage.textContent =
+                            error.message ||
+                            "Unable to send your enquiry. Please try again.";
+
+                        statusMessage.style.color =
+                            "#ff8a80";
+
+                        statusMessage.style.background =
+                            "rgba(255, 80, 80, 0.05)";
+
+                        statusMessage.classList.remove(
+                            "hidden"
+                        );
+                    }
+
+
+                    /*
+                     * Restore button
+                     */
+
+                    if (submitButton) {
+
+                        submitButton.disabled =
+                            false;
+
+                        submitButton.style.opacity =
+                            "";
+
+                        submitButton.style.cursor =
+                            "";
+
+                        submitButton.innerHTML =
+                            originalButtonHTML;
+                    }
+
+                }
+
+            }
+        );
+
+
+        console.log(
+            "TRISVÉ contact form initialized with Formspree."
+        );
+
+    }
+
+
+    /*
+     * IMPORTANT
+     *
+     * HtmlPage executes this script after the
+     * raw contact HTML has already been inserted.
+     */
+
+    initContactForm();
+
+})();

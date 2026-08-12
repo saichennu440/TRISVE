@@ -312,3 +312,255 @@ html.theme-light .grain-overlay {
   opacity: 0.015;
   mix-blend-mode: multiply;
 }
+
+
+/* =========================================================
+   FLOATING WHATSAPP BOOKING BUTTON
+   ========================================================= */
+
+.floating-session-cta {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+
+    z-index: 99999;
+
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #25D366;
+    color: #ffffff;
+
+    border-radius: 50% !important;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, 0.35),
+        0 0 0 4px rgba(37, 211, 102, 0.10);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.floating-session-cta:hover {
+    transform: translateY(-4px) scale(1.05);
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.4),
+        0 0 0 6px rgba(37, 211, 102, 0.12);
+}
+
+
+/* =========================================================
+   REAL WHATSAPP GREEN
+   ========================================================= */
+
+.floating-session-icon {
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+
+    flex-shrink: 0;
+}
+
+.floating-session-icon svg {
+    width: 34px;
+    height: 34px;
+
+    display: block;
+}
+
+
+/* =========================================================
+   BOOK YOUR FIRST SESSION MESSAGE
+   ========================================================= */
+
+.floating-session-message {
+    position: absolute;
+
+    right: 0;
+    bottom: calc(100% + 10px);
+
+    padding: 7px 11px;
+
+    background: #131315;
+    color: #f5bd5c;
+
+    border: 1px solid rgba(245, 189, 92, 0.30);
+
+    font-family: Inter, system-ui, sans-serif;
+
+    font-size: 9px;
+    font-weight: 700;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(5px);
+
+    transition:
+        opacity 0.25s ease,
+        visibility 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+/* Small triangle under notification */
+
+.floating-session-message::after {
+    content: '';
+
+    position: absolute;
+
+    right: 18px;
+    bottom: -5px;
+
+    width: 8px;
+    height: 8px;
+
+    background: #131315;
+
+    border-right: 1px solid rgba(245, 189, 92, 0.30);
+    border-bottom: 1px solid rgba(245, 189, 92, 0.30);
+
+    transform: rotate(45deg);
+}
+
+
+/* Show message on hover */
+
+.floating-session-cta:hover .floating-session-message {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+
+/* =========================================================
+   EXCLAMATION BADGE
+   ========================================================= */
+
+.floating-session-badge {
+    position: absolute;
+
+    top: -3px;
+    right: -3px;
+
+    width: 20px;
+    height: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50% !important;
+
+    background: #d84b3f;
+    color: #ffffff;
+
+    font-family: Inter, system-ui, sans-serif;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    line-height: 1;
+
+    border: 2px solid #131315;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.35);
+
+    animation: floating-badge-pulse 2.2s ease-in-out infinite;
+}
+
+
+@keyframes floating-badge-pulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.12);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 640px) {
+
+    .floating-session-cta {
+        right: 18px;
+        bottom: 18px;
+
+        width: 52px;
+        height: 52px;
+    }
+
+    .floating-session-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .floating-session-icon svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .floating-session-message {
+        bottom: calc(100% + 8px);
+
+        padding: 6px 9px;
+
+        font-size: 8px;
+
+        letter-spacing: 0.06em;
+    }
+
+    .floating-session-badge {
+        width: 18px;
+        height: 18px;
+
+        font-size: 10px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .floating-session-cta {
+        transition: none;
+    }
+
+    .floating-session-badge {
+        animation: none;
+    }
+
+    .floating-session-message {
+        transition: none;
+    }
+}

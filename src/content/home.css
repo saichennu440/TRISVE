@@ -53,4 +53,50 @@
             opacity: 1;
             transform: translateY(0);
         }
-    
+    /* Country Marquee */
+.scroll-marquee {
+    width: max-content;
+    animation: country-marquee 30s linear infinite;
+    will-change: transform;
+    cursor: grab;
+
+    /* Enable touch dragging */
+    touch-action: pan-y;
+    user-select: none;
+
+    /* Prevent accidental text/image selection while dragging */
+    -webkit-user-select: none;
+}
+
+.scroll-marquee:active {
+    cursor: grabbing;
+}
+
+/* Pause automatic movement while user interacts */
+.scroll-marquee.is-dragging {
+    animation-play-state: paused;
+}
+
+@keyframes country-marquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(calc(-50% - 1.5rem));
+    }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .scroll-marquee {
+        animation-duration: 24s;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    .scroll-marquee {
+        animation: none;
+    }
+}
