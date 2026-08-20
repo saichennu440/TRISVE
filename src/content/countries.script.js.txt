@@ -183,3 +183,593 @@
     initGlobalFootprint();
 
 })();
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const mapCanvas =
+            document.querySelector(
+                "#global-footprint .gf-map-canvas"
+            );
+
+
+        const pins =
+            document.querySelectorAll(
+                "#global-footprint .gf-pin"
+            );
+
+
+        const preview =
+            document.getElementById(
+                "gf-country-preview"
+            );
+
+
+        const previewImage =
+            document.getElementById(
+                "gf-preview-image"
+            );
+
+
+        const previewFlag =
+            document.getElementById(
+                "gf-preview-flag"
+            );
+
+
+        const previewCountry =
+            document.getElementById(
+                "gf-preview-country"
+            );
+
+
+        const previewDescription =
+            document.getElementById(
+                "gf-preview-description"
+            );
+
+
+        if (
+            !mapCanvas ||
+            !preview ||
+            !pins.length
+        ) {
+
+            return;
+
+        }
+
+
+        /* =================================================
+           COUNTRY DATA
+        ================================================= */
+
+        const countryData = {
+
+
+            india: {
+
+                name:
+                    "India",
+
+                image:
+                    "/site-images/countries/india.webp",
+
+                flag:
+                    "https://flagcdn.com/in.svg",
+
+                description:
+                    "Your journey towards global education begins here."
+
+            },
+
+
+            usa: {
+
+                name:
+                    "USA",
+
+                image:
+                    "/site-images/countries/usa.webp",
+
+                flag:
+                    "https://flagcdn.com/us.svg",
+
+                description:
+                    "Home to world-leading universities, STEM programmes and global research opportunities."
+
+            },
+
+
+            ireland: {
+
+                name:
+                    "Ireland",
+
+                image:
+                    "/site-images/countries/ireland.webp",
+
+                flag:
+                    "https://flagcdn.com/ie.svg",
+
+                description:
+                    "A thriving European technology hub with internationally recognised universities."
+
+            },
+
+
+            uk: {
+
+                name:
+                    "United Kingdom",
+
+                image:
+                    "/site-images/countries/uk.webp",
+
+                flag:
+                    "https://flagcdn.com/gb.svg",
+
+                description:
+                    "Centuries of academic excellence across globally recognised universities."
+
+            },
+
+
+            france: {
+
+                name:
+                    "France",
+
+                image:
+                    "/site-images/countries/France.webp",
+
+                flag:
+                    "https://flagcdn.com/fr.svg",
+
+                description:
+                    "Prestigious programmes across business, engineering, fashion and the arts."
+
+            },
+
+
+            germany: {
+
+                name:
+                    "Germany",
+
+                image:
+                    "/site-images/countries/germany.webp",
+
+                flag:
+                    "https://flagcdn.com/de.svg",
+
+                description:
+                    "Engineering excellence, advanced research and high-quality European education."
+
+            },
+
+
+            spain: {
+
+                name:
+                    "Spain",
+
+                image:
+                    "/site-images/countries/spain.webp",
+
+                flag:
+                    "https://flagcdn.com/es.svg",
+
+                description:
+                    "A vibrant destination for business, hospitality and international education."
+
+            },
+
+
+            italy: {
+
+                name:
+                    "Italy",
+
+                image:
+                    "/site-images/countries/italy.webp",
+
+                flag:
+                    "https://flagcdn.com/it.svg",
+
+                description:
+                    "A global destination for design, architecture, fashion and creative education."
+
+            },
+
+
+            poland: {
+
+                name:
+                    "Poland",
+
+                image:
+                    "/site-images/countries/poland.webp",
+
+                flag:
+                    "https://flagcdn.com/pl.svg",
+
+                description:
+                    "Affordable European education with strong programmes in engineering and technology."
+
+            },
+
+
+            dubai: {
+
+                name:
+                    "Dubai",
+
+                image:
+                    "/site-images/countries/dubai.webp",
+
+                flag:
+                    "https://flagcdn.com/ae.svg",
+
+                description:
+                    "A global hub connecting international education, business and innovation."
+
+            },
+
+
+            australia: {
+
+                name:
+                    "Australia",
+
+                image:
+                    "/site-images/countries/aus.webp",
+
+                flag:
+                    "https://flagcdn.com/au.svg",
+
+                description:
+                    "World-class education combined with innovation and an exceptional student lifestyle."
+
+            }
+
+        };
+
+
+        /* =================================================
+           UPDATE CONTENT
+        ================================================= */
+
+        function updatePreview(
+            location
+        ) {
+
+            const country =
+                countryData[
+                    location
+                ];
+
+
+            if (
+                !country
+            ) {
+
+                return;
+
+            }
+
+
+            previewImage.src =
+                country.image;
+
+
+            previewImage.alt =
+                country.name;
+
+
+            previewFlag.src =
+                country.flag;
+
+
+            previewFlag.alt =
+                country.name +
+                " flag";
+
+
+            previewCountry.textContent =
+                country.name;
+
+
+            previewDescription.textContent =
+                country.description;
+
+        }
+
+
+        /* =================================================
+           POSITION CARD
+        ================================================= */
+
+        function positionPreview(
+            pin
+        ) {
+
+            const canvasRect =
+                mapCanvas
+                    .getBoundingClientRect();
+
+
+            const pinRect =
+                pin
+                    .getBoundingClientRect();
+
+
+            const previewWidth =
+                preview.offsetWidth ||
+                300;
+
+
+            const previewHeight =
+                preview.offsetHeight ||
+                270;
+
+
+            const x =
+                pinRect.left -
+                canvasRect.left +
+                pinRect.width / 2;
+
+
+            const y =
+                pinRect.top -
+                canvasRect.top +
+                pinRect.height / 2;
+
+
+            const gap =
+                22;
+
+
+            /*
+             Default:
+             show card to right
+            */
+
+            let left =
+                x +
+                gap;
+
+
+            let top =
+                y -
+                previewHeight / 2;
+
+
+            /*
+             For countries on right side
+             show card on left
+            */
+
+            if (
+                left +
+                previewWidth >
+                mapCanvas.clientWidth -
+                20
+            ) {
+
+                left =
+                    x -
+                    previewWidth -
+                    gap;
+
+            }
+
+
+            /*
+             Prevent top overflow
+            */
+
+            if (
+                top <
+                20
+            ) {
+
+                top =
+                    20;
+
+            }
+
+
+            /*
+             Prevent bottom overflow
+            */
+
+            if (
+                top +
+                previewHeight >
+                mapCanvas.clientHeight -
+                20
+            ) {
+
+                top =
+                    mapCanvas.clientHeight -
+                    previewHeight -
+                    20;
+
+            }
+
+
+            preview.style.left =
+                left +
+                "px";
+
+
+            preview.style.top =
+                top +
+                "px";
+
+        }
+
+
+        /* =================================================
+           SHOW
+        ================================================= */
+
+        function showPreview(
+            pin
+        ) {
+
+            const location =
+                pin.dataset.location;
+
+
+            updatePreview(
+                location
+            );
+
+
+            /*
+             Make temporarily measurable
+            */
+
+            preview.style.display =
+                "block";
+
+
+            preview.style.visibility =
+                "hidden";
+
+
+            requestAnimationFrame(
+                function () {
+
+                    positionPreview(
+                        pin
+                    );
+
+
+                    preview.style.visibility =
+                        "";
+
+
+                    preview.classList.add(
+                        "is-visible"
+                    );
+
+
+                    preview.setAttribute(
+                        "aria-hidden",
+                        "false"
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* =================================================
+           HIDE
+        ================================================= */
+
+        function hidePreview() {
+
+            preview.classList.remove(
+                "is-visible"
+            );
+
+
+            preview.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+        }
+
+
+        /* =================================================
+           EVENTS
+        ================================================= */
+
+        pins.forEach(
+            function (
+                pin
+            ) {
+
+
+                pin.addEventListener(
+                    "mouseenter",
+                    function () {
+
+                        showPreview(
+                            pin
+                        );
+
+                    }
+                );
+
+
+                pin.addEventListener(
+                    "mouseleave",
+                    hidePreview
+                );
+
+
+                /*
+                 Keyboard
+                */
+
+                pin.addEventListener(
+                    "focus",
+                    function () {
+
+                        showPreview(
+                            pin
+                        );
+
+                    }
+                );
+
+
+                pin.addEventListener(
+                    "blur",
+                    hidePreview
+                );
+
+            }
+        );
+
+
+        /*
+         Recalculate position if
+         window changes size.
+        */
+
+        window.addEventListener(
+            "resize",
+            function () {
+
+                const activePin =
+                    document.querySelector(
+                        "#global-footprint .gf-pin:hover, #global-footprint .gf-pin:focus"
+                    );
+
+
+                if (
+                    activePin
+                ) {
+
+                    positionPreview(
+                        activePin
+                    );
+
+                }
+
+            }
+        );
+
+    }
+);
+

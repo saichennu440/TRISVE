@@ -50,56 +50,9 @@ export default function HtmlPage({
        Always visible.
     --------------------------------------------- */
 
-    const isHomePage =
-      window.location.pathname === '/' ||
-      window.location.pathname === ''
-
-    let observer = null
-
-    if (isHomePage) {
-      setShowFloatingCta(false)
-
-      /*
-       * Add id="home-hero" to your homepage hero section.
-       *
-       * Example:
-       * <section id="home-hero" ...>
-       */
-
-      const hero = document.getElementById('home-hero')
-
-      if (hero) {
-        observer = new IntersectionObserver(
-          ([entry]) => {
-            /*
-             * When hero is visible:
-             * hide CTA
-             *
-             * When hero leaves viewport:
-             * show CTA
-             */
-            setShowFloatingCta(!entry.isIntersecting)
-          },
-          {
-            threshold: 0.05
-          }
-        )
-
-        observer.observe(hero)
-      } else {
-        /*
-         * Fallback:
-         * If hero ID isn't found, show the CTA.
-         */
-        setShowFloatingCta(true)
-      }
-    } else {
-      /*
-       * All other pages:
-       * CTA is always visible.
-       */
-      setShowFloatingCta(true)
-    }
+    // Floating CTA is visible on every page,
+// including the Home page hero section.
+setShowFloatingCta(true)
 
     /* ---------------------------------------------
        Run page-specific JavaScript

@@ -272,6 +272,432 @@ html.theme-light #global-footprint .gf-destination-button.is-active {
 html.theme-light #global-footprint .gf-origin-label strong {
   color: #1f1f21;
 }
+
+
+
+/* =========================================================
+   COUNTRY HOVER IMAGE CARD
+========================================================= */
+
+.gf-country-preview {
+
+    position: absolute;
+    z-index: 100;
+
+    width: 300px;
+
+    pointer-events: none;
+
+    visibility: hidden;
+    opacity: 0;
+
+    background: rgba(13, 13, 15, 0.97);
+
+    border:
+        1px solid
+        rgba(245, 189, 92, 0.35);
+
+    box-shadow:
+        0 25px 70px
+        rgba(0, 0, 0, 0.7);
+
+    backdrop-filter: blur(14px);
+
+    -webkit-backdrop-filter:
+        blur(14px);
+
+    transform:
+        translateY(10px)
+        scale(0.97);
+
+    transition:
+        opacity 0.22s ease,
+        visibility 0.22s ease,
+        transform 0.22s ease;
+}
+
+
+.gf-country-preview.is-visible {
+
+    visibility: visible;
+
+    opacity: 1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+/* Image */
+
+.gf-country-preview-image-wrap {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 175px;
+
+    overflow: hidden;
+}
+
+
+.gf-country-preview-image {
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    filter:
+        grayscale(15%);
+
+    transform:
+        scale(1.04);
+
+    transition:
+        transform
+        0.6s
+        cubic-bezier(
+            .16,
+            1,
+            .3,
+            1
+        );
+}
+
+
+.gf-country-preview.is-visible
+.gf-country-preview-image {
+
+    transform:
+        scale(1);
+}
+
+
+.gf-country-preview-gradient {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(13, 13, 15, 0)
+            30%,
+            rgba(13, 13, 15, 0.2)
+            55%,
+            rgba(13, 13, 15, 0.95)
+            100%
+        );
+}
+
+
+/* Content */
+
+.gf-country-preview-content {
+
+    padding:
+        17px
+        19px
+        20px;
+}
+
+
+.gf-country-preview-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 12px;
+}
+
+
+.gf-country-preview-flag {
+
+    width: 38px;
+    height: 27px;
+
+    object-fit: contain;
+
+    flex-shrink: 0;
+}
+
+
+.gf-country-preview-label {
+
+    display: block;
+
+    margin-bottom: 4px;
+
+    color:
+        #f5bd5c;
+
+    font-family:
+        Inter,
+        sans-serif;
+
+    font-size:
+        8px;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        0.22em;
+
+    text-transform:
+        uppercase;
+}
+
+
+.gf-country-preview h3 {
+
+    margin: 0;
+
+    color:
+        #ffffff;
+
+    font-family:
+        Fraunces,
+        serif;
+
+    font-size:
+        21px;
+
+    font-weight:
+        400;
+
+    line-height:
+        1.2;
+}
+
+
+.gf-country-preview p {
+
+    margin: 0;
+
+    color:
+        #b7b7bd;
+
+    font-family:
+        Inter,
+        sans-serif;
+
+    font-size:
+        12px;
+
+    line-height:
+        1.6;
+}
+
+
+/* =========================================================
+   PIN COORDINATES
+========================================================= */
+
+#global-footprint .gf-pin-usa {
+    left: 27.791% !important;
+    top: 34.457% !important;
+}
+
+
+#global-footprint .gf-pin-ireland {
+    left: 45.924% !important;
+    top: 29.681% !important;
+}
+
+
+#global-footprint .gf-pin-uk {
+    left: 47.270% !important;
+    top: 29.268% !important;
+}
+
+
+#global-footprint .gf-pin-france {
+    left: 48.526% !important;
+    top: 33.084% !important;
+}
+
+
+#global-footprint .gf-pin-germany {
+    left: 50.414% !important;
+    top: 30.684% !important;
+}
+
+
+#global-footprint .gf-pin-spain {
+    left: 47.028% !important;
+    top: 36.280% !important;
+}
+
+
+#global-footprint .gf-pin-italy {
+    left: 50.999% !important;
+    top: 34.822% !important;
+}
+
+
+#global-footprint .gf-pin-poland {
+    left: 52.518% !important;
+    top: 30.087% !important;
+}
+
+
+#global-footprint .gf-pin-dubai {
+    left: 59.231% !important;
+    top: 43.484% !important;
+}
+
+
+#global-footprint .gf-pin-india {
+    left: 64.115% !important;
+    top: 43.615% !important;
+}
+
+
+#global-footprint .gf-pin-australia {
+    left: 75.323% !important;
+    top: 67.905% !important;
+}
+
+
+/* Origin label aligned with India */
+
+#global-footprint .gf-origin-label {
+
+    left: 65.3%;
+
+    top: 43.615%;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media
+(max-width: 767px) {
+
+    .gf-country-preview {
+
+        width:
+            245px;
+    }
+
+
+    .gf-country-preview-image-wrap {
+
+        height:
+            140px;
+    }
+
+}
+
+
+/* =========================================================
+   LIGHT THEME
+========================================================= */
+
+html.theme-light
+.gf-country-preview {
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.97
+        );
+
+    border-color:
+        rgba(
+            165,
+            109,
+            16,
+            0.3
+        );
+
+    box-shadow:
+        0
+        25px
+        70px
+        rgba(
+            36,
+            36,
+            38,
+            0.16
+        );
+}
+
+
+html.theme-light
+.gf-country-preview-gradient {
+
+    background:
+        linear-gradient(
+            to bottom,
+
+            rgba(
+                255,
+                255,
+                255,
+                0
+            )
+            35%,
+
+            rgba(
+                255,
+                255,
+                255,
+                0.25
+            )
+            60%,
+
+            rgba(
+                255,
+                255,
+                255,
+                0.96
+            )
+            100%
+        );
+}
+
+
+html.theme-light
+.gf-country-preview h3 {
+
+    color:
+        #1f1f21;
+}
+
+
+html.theme-light
+.gf-country-preview p {
+
+    color:
+        #65656b;
+}
+
+
+html.theme-light
+.gf-country-preview-label {
+
+    color:
+        #a56d10;
+}
+
+
 </style>
 
 <div class="grain-overlay"></div>
@@ -296,325 +722,379 @@ class="relative pt-section-gap pb-24 overflow-hidden">
 </div>
 </header>
 
-<section id="global-footprint" class="gf-section" aria-labelledby="global-footprint-title">
+<section
+    id="global-footprint"
+    class="gf-section"
+    aria-labelledby="global-footprint-title"
+>
     <div class="gf-grid" aria-hidden="true"></div>
     <div class="gf-glow" aria-hidden="true"></div>
 
     <div class="max-w-container-max mx-auto px-margin-edge relative z-10">
+
+        <!-- Heading -->
         <div class="gf-heading">
-            <p class="gf-overline">International Education Network</p>
-            <h2 id="global-footprint-title" class="font-display-lg text-headline-md font-light leading-tight">
+
+            <p class="gf-overline">
+                International Education Network
+            </p>
+
+            <h2
+                id="global-footprint-title"
+                class="font-display-lg text-headline-md font-light leading-tight"
+            >
                 Our Global Footprint
             </h2>
+
             <p class="gf-intro">
-                Select a destination to explore leading study opportunities across our global education network.
+                Hover over a destination to explore leading study
+                opportunities across our global education network.
             </p>
+
         </div>
 
-        <div class="gf-shell">
-            <!-- <aside class="gf-information" aria-live="polite">
-                <div class="gf-information-topline">
-                    <span>Selected Destination</span>
-                    <span id="gf-number">01</span>
-                </div>
-                <h3 id="gf-country">India</h3>
-                <p id="gf-description">
-                    Your study-abroad journey begins with personalised counselling and end-to-end guidance from India.
-                </p>
-            </aside> -->
 
-            <div class="gf-map-scroll" aria-label="Interactive global destinations map">
+        <!-- Map -->
+        <div class="gf-shell">
+
+            <div
+                class="gf-map-scroll"
+                aria-label="Interactive global destinations map"
+            >
+
                 <div class="gf-map-canvas">
-                    <!-- Pin positions below are mapped directly to the actual SVG country shapes. -->
+
+                    <!-- World Map -->
                     <img
                         class="gf-world-map"
                         src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg"
-                        alt="World map showing study destinations"
+                        alt="World map showing international study destinations"
                         draggable="false"
                     >
 
-                    <div class="gf-map-grid" aria-hidden="true"></div>
+                    <!-- Coordinate Grid -->
+                    <div
+                        class="gf-map-grid"
+                        aria-hidden="true"
+                    ></div>
 
-                    <svg class="gf-routes" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true">
-                        <!-- <path class="gf-route gf-route-main" d="M691.15 218.08 C575 40 345 48 227.91 172.28"></path> -->
-                        <path class="gf-route"     d="M641.15 218.08 Q460 55 277.91 172.29"></path>
-                        <path class="gf-route" d="M641.15 218.08 C625 96 550 98 472.70 146.34"></path>
-                        <path class="gf-route" d="M641.15 218.08 C628 124 555 124 485.26 165.42"></path>
-                        <path class="gf-route" d="M641.15 218.08 C640 107 575 105 504.14 153.42"></path>
-                        <path class="gf-route" d="M641.15 218.08 C615 154 545 151 470.28 181.40"></path>
-                        <path class="gf-route" d="M641.15 218.08 C640 144 580 142 509.99 174.11"></path>
-                        <path class="gf-route" d="M641.15 218.08 C650 102 600 102 525.18 150.44"></path>
-                        <path class="gf-route gf-route-main"     d="M641.15 218.08 Q616 204 592.31 217.42"></path>
-                        <path class="gf-route gf-route-main"     d="M641.15 218.08 Q720 245 753.23 339.53"></path>
-</svg>
 
-                    <div class="gf-origin-label" aria-hidden="true">
-                        <span>Starting Point</span>
-                        <strong>India</strong>
+                    <!-- =====================================================
+                         ROUTE LINES
+                    ====================================================== -->
+
+                    <svg
+                        class="gf-routes"
+                        viewBox="0 0 1000 500"
+                        preserveAspectRatio="none"
+                        aria-hidden="true"
+                    >
+
+                        <!-- India → USA -->
+                        <path
+                            class="gf-route gf-route-main"
+                            d="M641.15 218.08 Q460 55 277.91 172.29"
+                        ></path>
+
+                        <!-- India → Ireland -->
+                        <path
+                            class="gf-route"
+                            d="M641.15 218.08 C625 96 550 98 459.24 148.41"
+                        ></path>
+
+                        <!-- India → United Kingdom -->
+                        <path
+                            class="gf-route"
+                            d="M641.15 218.08 C625 105 555 105 472.70 146.34"
+                        ></path>
+
+                        <!-- India → France -->
+                        <path
+                            class="gf-route"
+                            d="M641.15 218.08 C628 124 555 124 485.26 165.42"
+                        ></path>
+
+                        <!-- India → Germany -->
+                        <path
+                            class="gf-route"
+                            d="M641.15 218.08 C640 107 575 105 504.14 153.42"
+                        ></path>
+
+                        <!-- India → Spain -->
+                        <path
+                            class="gf-route"
+                            d="M641.15 218.08 C615 154 545 151 470.28 181.40"
+                        ></path>
+
+                        <!-- India → Italy -->
+                        <path
+                            class="gf-route"
+                            d="M641.15 218.08 C640 144 580 142 509.99 174.11"
+                        ></path>
+
+                        <!-- India → Poland -->
+                        <path
+                            class="gf-route"
+                            d="M641.15 218.08 C650 102 600 102 525.18 150.44"
+                        ></path>
+
+                        <!-- India → Dubai -->
+                        <path
+                            class="gf-route gf-route-main"
+                            d="M641.15 218.08 Q616 204 592.31 217.42"
+                        ></path>
+
+                        <!-- India → Australia -->
+                        <path
+                            class="gf-route gf-route-main"
+                            d="M641.15 218.08 Q720 245 753.23 339.53"
+                        ></path>
+
+                    </svg>
+
+
+                    <!-- Origin -->
+                    <div
+                        class="gf-origin-label"
+                        aria-hidden="true"
+                    >
+                        <span>
+                            Starting Point
+                        </span>
+
+                        <strong>
+                            India
+                        </strong>
                     </div>
 
-                    <button class="gf-pin gf-pin-india is-active" type="button" data-location="india" style="left:69.115%; top:43.615%;" aria-label="Select India" aria-pressed="true">
-                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
-                        <span class="gf-tooltip">India · Your Journey Begins Here</span>
+
+                    <!-- =====================================================
+                         INDIA
+                    ====================================================== -->
+
+                    <button
+                        class="gf-pin gf-pin-india is-active"
+                        type="button"
+                        data-location="india"
+                        aria-label="Explore India"
+                    >
+                        <span class="gf-pin-pulse"></span>
+                        <span class="gf-pin-ring"></span>
+                        <span class="gf-pin-dot"></span>
                     </button>
 
-                    <button class="gf-pin gf-pin-usa" type="button" data-location="usa" style="left:22.791%; top:34.457%;" aria-label="Select USA" aria-pressed="false">
-                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
-                        <span class="gf-tooltip">USA · Ivy League, STEM and Research</span>
+
+                    <!-- USA -->
+
+                    <button
+                        class="gf-pin gf-pin-usa"
+                        type="button"
+                        data-location="usa"
+                        aria-label="Explore USA"
+                    >
+                        <span class="gf-pin-pulse"></span>
+                        <span class="gf-pin-ring"></span>
+                        <span class="gf-pin-dot"></span>
                     </button>
 
-                    <button class="gf-pin gf-pin-ireland" type="button" data-location="ireland" style="left:45.924%; top:29.681%;" aria-label="Select Ireland" aria-pressed="false">
-                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
-                        <span class="gf-tooltip">Ireland · Innovation and Technology</span>
+
+                    <!-- Ireland -->
+
+                    <button
+                        class="gf-pin gf-pin-ireland"
+                        type="button"
+                        data-location="ireland"
+                        aria-label="Explore Ireland"
+                    >
+                        <span class="gf-pin-pulse"></span>
+                        <span class="gf-pin-ring"></span>
+                        <span class="gf-pin-dot"></span>
                     </button>
 
-                    <button class="gf-pin gf-pin-uk" type="button" data-location="uk" style="left:47.270%; top:29.268%;" aria-label="Select United Kingdom" aria-pressed="false">
-                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
-                        <span class="gf-tooltip">United Kingdom · World-Class Universities</span>
+
+                    <!-- United Kingdom -->
+
+                    <button
+                        class="gf-pin gf-pin-uk"
+                        type="button"
+                        data-location="uk"
+                        aria-label="Explore United Kingdom"
+                    >
+                        <span class="gf-pin-pulse"></span>
+                        <span class="gf-pin-ring"></span>
+                        <span class="gf-pin-dot"></span>
                     </button>
 
-                    <button class="gf-pin gf-pin-france" type="button" data-location="france" style="left:48.526%; top:33.084%;" aria-label="Select France" aria-pressed="false">
-                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
-                        <span class="gf-tooltip">France · Business, Fashion and Engineering</span>
+
+                    <!-- France -->
+
+                    <button
+                        class="gf-pin gf-pin-france"
+                        type="button"
+                        data-location="france"
+                        aria-label="Explore France"
+                    >
+                        <span class="gf-pin-pulse"></span>
+                        <span class="gf-pin-ring"></span>
+                        <span class="gf-pin-dot"></span>
                     </button>
 
-                    <button class="gf-pin gf-pin-germany" type="button" data-location="germany" style="left:50.414%; top:30.684%;" aria-label="Select Germany" aria-pressed="false">
-                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
-                        <span class="gf-tooltip">Germany · Engineering Excellence</span>
+
+                    <!-- Germany -->
+
+                    <button
+                        class="gf-pin gf-pin-germany"
+                        type="button"
+                        data-location="germany"
+                        aria-label="Explore Germany"
+                    >
+                        <span class="gf-pin-pulse"></span>
+                        <span class="gf-pin-ring"></span>
+                        <span class="gf-pin-dot"></span>
                     </button>
 
-                    <button class="gf-pin gf-pin-spain" type="button" data-location="spain" style="left:47.028%; top:36.280%;" aria-label="Select Spain" aria-pressed="false">
-                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
-                        <span class="gf-tooltip">Spain · Business, Hospitality and Arts</span>
+
+                    <!-- Spain -->
+
+                    <button
+                        class="gf-pin gf-pin-spain"
+                        type="button"
+                        data-location="spain"
+                        aria-label="Explore Spain"
+                    >
+                        <span class="gf-pin-pulse"></span>
+                        <span class="gf-pin-ring"></span>
+                        <span class="gf-pin-dot"></span>
                     </button>
 
-                    <button class="gf-pin gf-pin-italy" type="button" data-location="italy" style="left:50.999%; top:34.822%;" aria-label="Select Italy" aria-pressed="false">
-                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
-                        <span class="gf-tooltip">Italy · Design, Architecture and Business</span>
+
+                    <!-- Italy -->
+
+                    <button
+                        class="gf-pin gf-pin-italy"
+                        type="button"
+                        data-location="italy"
+                        aria-label="Explore Italy"
+                    >
+                        <span class="gf-pin-pulse"></span>
+                        <span class="gf-pin-ring"></span>
+                        <span class="gf-pin-dot"></span>
                     </button>
 
-                    <button class="gf-pin gf-pin-poland" type="button" data-location="poland" style="left:52.518%; top:30.087%;" aria-label="Select Poland" aria-pressed="false">
-                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
-                        <span class="gf-tooltip">Poland · Affordable European Education</span>
+
+                    <!-- Poland -->
+
+                    <button
+                        class="gf-pin gf-pin-poland"
+                        type="button"
+                        data-location="poland"
+                        aria-label="Explore Poland"
+                    >
+                        <span class="gf-pin-pulse"></span>
+                        <span class="gf-pin-ring"></span>
+                        <span class="gf-pin-dot"></span>
                     </button>
 
-                    <button class="gf-pin gf-pin-dubai" type="button" data-location="dubai" style="left:62.231%; top:43.484%;" aria-label="Select Dubai" aria-pressed="false">
-                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
-                        <span class="gf-tooltip">Dubai · Global Business Hub</span>
+
+                    <!-- Dubai -->
+
+                    <button
+                        class="gf-pin gf-pin-dubai"
+                        type="button"
+                        data-location="dubai"
+                        aria-label="Explore Dubai"
+                    >
+                        <span class="gf-pin-pulse"></span>
+                        <span class="gf-pin-ring"></span>
+                        <span class="gf-pin-dot"></span>
                     </button>
 
-                    <button class="gf-pin gf-pin-australia" type="button" data-location="australia" style="left:83.323%; top:67.905%;" aria-label="Select Australia" aria-pressed="false">
-                        <span class="gf-pin-pulse"></span><span class="gf-pin-ring"></span><span class="gf-pin-dot"></span>
-                        <span class="gf-tooltip">Australia · Innovation and Lifestyle</span>
+
+                    <!-- Australia -->
+
+                    <button
+                        class="gf-pin gf-pin-australia"
+                        type="button"
+                        data-location="australia"
+                        aria-label="Explore Australia"
+                    >
+                        <span class="gf-pin-pulse"></span>
+                        <span class="gf-pin-ring"></span>
+                        <span class="gf-pin-dot"></span>
                     </button>
+
+
+                    <!-- =====================================================
+                         COUNTRY HOVER PREVIEW
+                    ====================================================== -->
+
+                    <div
+                        id="gf-country-preview"
+                        class="gf-country-preview"
+                        aria-hidden="true"
+                    >
+
+                        <div class="gf-country-preview-image-wrap">
+
+                            <img
+                                id="gf-preview-image"
+                                class="gf-country-preview-image"
+                                src="/site-images/countries/usa.webp"
+                                alt=""
+                            >
+
+                            <div class="gf-country-preview-gradient"></div>
+
+                        </div>
+
+
+                        <div class="gf-country-preview-content">
+
+                            <div class="gf-country-preview-heading">
+
+                                <img
+                                    id="gf-preview-flag"
+                                    class="gf-country-preview-flag"
+                                    src="https://flagcdn.com/us.svg"
+                                    alt=""
+                                >
+
+                                <div>
+
+                                    <span class="gf-country-preview-label">
+                                        Study Destination
+                                    </span>
+
+                                    <h3 id="gf-preview-country">
+                                        USA
+                                    </h3>
+
+                                </div>
+
+                            </div>
+
+
+                            <p id="gf-preview-description">
+                                Home to world-leading universities,
+                                STEM programmes and global research
+                                opportunities.
+                            </p>
+
+                        </div>
+
+                    </div>
+
                 </div>
+
             </div>
 
-            <!-- <div class="gf-destinations" aria-label="Destination selector">
-                <button class="gf-destination is-active" type="button" data-location="india"><span>India</span></button>
-                <button class="gf-destination" type="button" data-location="usa"><span>USA</span></button>
-                <button class="gf-destination" type="button" data-location="ireland"><span>Ireland</span></button>
-                <button class="gf-destination" type="button" data-location="uk"><span>United Kingdom</span></button>
-                <button class="gf-destination" type="button" data-location="france"><span>France</span></button>
-                <button class="gf-destination" type="button" data-location="germany"><span>Germany</span></button>
-                <button class="gf-destination" type="button" data-location="spain"><span>Spain</span></button>
-                <button class="gf-destination" type="button" data-location="italy"><span>Italy</span></button>
-                <button class="gf-destination" type="button" data-location="poland"><span>Poland</span></button>
-                <button class="gf-destination" type="button" data-location="dubai"><span>Dubai</span></button>
-                <button class="gf-destination" type="button" data-location="australia"><span>Australia</span></button>
-            </div> -->
         </div>
+
     </div>
 </section>
 
-<section class="py-section-gap">
-<div class="max-w-container-max mx-auto px-margin-edge">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
-<!-- Card: USA -->
-<div id="country-usa"
-class="editorial-card group relative h-[500px] overflow-hidden bg-surface-container border border-outline-variant/10">
-<div class="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-<img class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A cinematic wide shot of a prestigious ivy league university campus in the USA during autumn. Golden leaves carpet the stone pathways between gothic red-brick buildings. The lighting is warm and late-afternoon, creating a sophisticated and academically ambitious atmosphere in deep navy and gold tones." src="/site-images/countries/usa.webp"/>
-</div>
-<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-8 w-full z-10">
-<div class="flex items-center gap-4 mb-4">
-<img
-    src="https://flagcdn.com/us.svg"
-    alt="United States"
-    class="w-10 h-10 object-contain"
-/><h3 class="font-headline-sm text-on-background">USA</h3>
-</div>
-<div class="h-px bg-secondary w-0 hover-divider mb-6"></div>
-<p class="font-body-md text-on-surface-variant translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-                            Home to the widest range of universities and global tech hubs. Experience the pinnacle of research and innovation.
-                        </p>
-</div>
-</div>
-<!-- Card: UK -->
-<div id="country-uk"
-class="editorial-card group relative h-[500px] overflow-hidden bg-surface-container border border-outline-variant/10">
-<div class="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-<img class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="An atmospheric shot of an ancient library at Oxford University, UK. Tall wooden shelves filled with leather-bound books reach toward high vaulted ceilings. Soft morning light streams through stained glass windows, illuminating dust motes. The style is editorial and classic, emphasizing heritage and elite education." src="/site-images/countries/uk.webp"/>
-</div>
-<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-8 w-full z-10">
-<div class="flex items-center gap-4 mb-4">
-<img
-    src="https://flagcdn.com/gb.svg"
-    alt="United Kingdom"
-    class="w-10 h-10 object-contain"
-/>
-<h3 class="font-headline-sm text-on-background">United Kingdom</h3>
-</div>
-<div class="h-px bg-secondary w-0 hover-divider mb-6"></div>
-<p class="font-body-md text-on-surface-variant translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-                            Centuries of academic excellence. Study in historic institutions that have shaped world leaders for generations.
-                        </p>
-</div>
-</div>
-<!-- Card: Australia -->
-<div id="country-australia" class="editorial-card group relative h-[500px] overflow-hidden bg-surface-container border border-outline-variant/10">
-<div class="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-<img class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A modern glass-facade university building in Sydney, Australia, overlooking the blue harbor. Bright coastal sunlight reflects off the architecture, giving it a clean, high-precision aesthetic. Lush greenery frames the foreground. The mood is vibrant, balanced, and premium, highlighting a high quality of life." src="/site-images/countries/aus.webp"/>
-</div>
-<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-8 w-full z-10">
-<div class="flex items-center gap-4 mb-4">
-<img
-    src="https://flagcdn.com/au.svg"
-    alt="Australia"
-    class="w-10 h-10 object-contain"
-/>
-<h3 class="font-headline-sm text-on-background">Australia</h3>
-</div>
-<div class="h-px bg-secondary w-0 hover-divider mb-6"></div>
-<p class="font-body-md text-on-surface-variant translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-                            World-class education combined with an unparalleled lifestyle. Global rankings meet outdoor perfection.
-                        </p>
-</div>
-</div>
-<!-- Card: Germany -->
-<div id="country-germany" class="editorial-card group relative h-[500px] overflow-hidden bg-surface-container border border-outline-variant/10">
-<div class="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-<img class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A high-tech laboratory interior in a German technical university. Precise machinery and glowing blue interfaces contrast with a clean, industrial design. A focused student works with advanced robotics. The style is sharp, focused, and highlights engineering excellence in a dark navy and cream palette." src="/site-images/countries/germany.webp"/>
-</div>
-<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-8 w-full z-10">
-<div class="flex items-center gap-4 mb-4">
-<img
-    src="https://flagcdn.com/de.svg"
-    alt="Germany"
-    class="w-10 h-10 object-contain"
-/>
-<h3 class="font-headline-sm text-on-background">Germany</h3>
-</div>
-<div class="h-px bg-secondary w-0 hover-divider mb-6"></div>
-<p class="font-body-md text-on-surface-variant translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-                            The heart of European engineering. Tuition-free excellence at state institutions for global innovators.
-                        </p>
-</div>
-</div>
-<!-- Card: Dubai -->
-<div id="country-dubai" class="editorial-card group relative h-[500px] overflow-hidden bg-surface-container border border-outline-variant/10">
-<div class="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-<img class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="The futuristic skyline of Dubai Financial Center seen through the architectural arches of a luxury campus. Golden sunset light hits the glass towers. The image is opulent, ultra-modern, and aspirational, reflecting a future-forward business and education hub." src="/site-images/countries/dubai.webp"/>
-</div>
-<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-8 w-full z-10">
-<div class="flex items-center gap-4 mb-4">
-<img
-    src="https://flagcdn.com/ae.svg"
-    alt="United Arab Emirates"
-    class="w-10 h-10 object-contain"
-/>
-<h3 class="font-headline-sm text-on-background">Dubai</h3>
-</div>
-<div class="h-px bg-secondary w-0 hover-divider mb-6"></div>
-<p class="font-body-md text-on-surface-variant translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-                            A global crossroads of business and culture. Access satellite campuses of the world's most elite universities.
-                        </p>
-</div>
-</div>
-<!-- Card: Ireland -->
-<div id="country-ireland" class="editorial-card group relative h-[500px] overflow-hidden bg-surface-container border border-outline-variant/10">
-<div class="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-<img class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="Trinity College Dublin's historic campus in Ireland. Lush green quads surrounded by grey stone classical architecture. Soft overcast sky provides a gentle, scholarly light. The atmosphere is peaceful, intelligent, and deeply rooted in a rich literary history." src="/site-images/countries/ireland.webp"/>
-</div>
-<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-8 w-full z-10">
-<div class="flex items-center gap-4 mb-4">
-<img
-    src="https://flagcdn.com/ie.svg"
-    alt="Ireland"
-    class="w-10 h-10 object-contain"
-/>
-<h3 class="font-headline-sm text-on-background">Ireland</h3>
-</div>
-<div class="h-px bg-secondary w-0 hover-divider mb-6"></div>
-<p class="font-body-md text-on-surface-variant translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-                            The European tech hub with a poetic soul. Perfect for careers in software, finance, and the humanities.
-                        </p>
-</div>
-</div>
-<!-- Card: Italy -->
-<div id="country-italy" class="editorial-card group relative h-[500px] overflow-hidden bg-surface-container border border-outline-variant/10">
-<div class="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-<img class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A design studio in Milan, Italy, featuring high ceilings and minimalist furniture. Large windows overlook historic Italian rooftops. Drawing tables and fabric swatches are illuminated by bright, clear light. The aesthetic is high-end, artistic, and sophisticatedly editorial." src="/site-images/countries/italy.webp"/>
-</div>
-<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-8 w-full z-10">
-<div class="flex items-center gap-4 mb-4">
-<img
-    src="https://flagcdn.com/it.svg"
-    alt="Italy"
-    class="w-10 h-10 object-contain"
-/>
-<h3 class="font-headline-sm text-on-background">Italy</h3>
-</div>
-<div class="h-px bg-secondary w-0 hover-divider mb-6"></div>
-<p class="font-body-md text-on-surface-variant translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-                            The epicenter of design, fashion, and history. Transform your creative vision into a professional masterpiece.
-                        </p>
-</div>
-</div>
-<!-- Card: France -->
-<div id="country-france" class="editorial-card group relative h-[500px] overflow-hidden bg-surface-container border border-outline-variant/10">
-<div class="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-<img class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="The grand entrance of a prestigious Parisian grande école. Intricate wrought iron gates and limestone facade. A sense of intellectual rigor and French elegance pervades the scene. The lighting is soft and blue-toned, emphasizing prestige and tradition." src="/site-images/countries/France.webp"/>
-</div>
-<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-8 w-full z-10">
-<div class="flex items-center gap-4 mb-4">
-<img src="https://flagcdn.com/fr.svg" alt="France" class="w-10 h-10 object-contain"/>
-<h3 class="font-headline-sm text-on-background">France</h3>
-</div>
-<div class="h-px bg-secondary w-0 hover-divider mb-6"></div>
-<p class="font-body-md text-on-surface-variant translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-                            Academic rigor meets cultural sophistication. Master your discipline in the most refined atmosphere in the world.
-                        </p>
-</div>
-</div>
-<!-- Card: Spain -->
-<div id="country-spain" class="editorial-card group relative h-[500px] overflow-hidden bg-surface-container border border-outline-variant/10">
-<div class="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-<img class="w-full h-full object-cover opacity-60 grayscale group-hover:grayscale-0 transition-all duration-700" data-alt="A modern business school courtyard in Madrid, Spain, with palm trees and contemporary architecture. Warm Mediterranean sunlight creates sharp shadows and bright highlights. The style is professional yet approachable, highlighting global business networking in a warm climate." src="/site-images/countries/spain.webp"/>
-</div>
-<div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent"></div>
-<div class="absolute bottom-0 left-0 p-8 w-full z-10">
-<div class="flex items-center gap-4 mb-4">
-<img src="https://flagcdn.com/es.svg" alt="Spain" class="w-10 h-10 object-contain"/>
-<h3 class="font-headline-sm text-on-background">Spain</h3>
-</div>
-<div class="h-px bg-secondary w-0 hover-divider mb-6"></div>
-<p class="font-body-md text-on-surface-variant translate-y-8 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-                            Global business leadership and hospitality. A vibrant academic culture with deep ties to Latin American markets.
-                        </p>
-</div>
-</div>
-</div>
-</div>
-</section>
+
+
 
 <section class="pb-section-gap">
 <div class="max-w-container-max mx-auto px-margin-edge">
@@ -627,7 +1107,7 @@ class="editorial-card group relative h-[500px] overflow-hidden bg-surface-contai
                         Not sure which country is right for you?
                     </h2>
 <a class="inline-flex items-center gap-4 bg-secondary text-on-secondary px-5 py-4 font-eyebrow uppercase tracking-widest hover:translate-x-2 transition-transform duration-300" href="/register">
-                        Book a Clarity First Session
+                        Book a Clarity First Service
       <span class="material-symbols-outlined">arrow_forward</span>
 </a>
 </div>

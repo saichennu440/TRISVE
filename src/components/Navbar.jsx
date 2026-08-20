@@ -30,7 +30,7 @@ export default function Navbar({ path }) {
               <a key={href} className="site-navlink" href={href} aria-current={isActive(path, href) ? 'page' : undefined}>{label}</a>
             ))}
           </nav>
-          <a className="site-cta site-cta--desktop" href="/register">Book Free Session</a>
+          {/* <a className="site-cta site-cta--desktop" href="/register">Book Free Session</a> */}
           <button className="site-menu-btn" type="button" onClick={() => setOpen(v => !v)} aria-expanded={open} aria-label={open ? 'Close navigation' : 'Open navigation'}>
             <span className="material-symbols-outlined" aria-hidden="true">{open ? 'close' : 'menu'}</span>
           </button>
@@ -45,7 +45,7 @@ export default function Navbar({ path }) {
             ))}
             <a href="/terms" aria-current={isActive(path, '/terms') ? 'page' : undefined}>Terms</a>
           </nav>
-          <a className="site-cta mobile-menu__cta" href="/register">Book Free Session</a>
+          {/* <a className="site-cta mobile-menu__cta" href="/register">Book Free Session</a> */}
         </div>
       )}
     </>
