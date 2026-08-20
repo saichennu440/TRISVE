@@ -134,7 +134,7 @@
 
                 formData.append(
                     "_subject",
-                    "New TRISVÉ Free Session Request"
+                    "New TRISVÉ Session Request"
                 );
             }
 
